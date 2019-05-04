@@ -1,0 +1,8 @@
+namespace forex_app_service.Models
+{
+    public class Settings
+    {
+        public string ConnectionString;
+        public string Database;
+    }
+}
