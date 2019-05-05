@@ -10,7 +10,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using AutoMapper;
+
 using forex_app_service.Models;
+using forex_app_service.Domain;
+using forex_app_service.Config;
+using forex_app_service.Mapper;
 
 namespace forex_app_service
 {
@@ -34,6 +39,16 @@ namespace forex_app_service
                     = Configuration.GetSection("MongoConnection:Database").Value;
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+             var config = new AutoMapper.MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new ForexPriceProfile());
+                
+            });
+
+            IMapper mapper = config.CreateMapper();
+            services.AddTransient<ForexPriceMap,ForexPriceMap>();
+            services.AddSingleton(mapper);
+            services.AddAutoMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

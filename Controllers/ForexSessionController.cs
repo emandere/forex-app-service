@@ -3,18 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using forex_app_service.Mapper;
 
 namespace forex_app_service.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class ForexController : ControllerBase
     {
+        private readonly ForexPriceMap _forexPriceMap;
+        public ForexController(ForexPriceMap forexPriceMap)
+        {   
+            _forexPriceMap = forexPriceMap;
+        }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            var pricesVar = new 
+            { 
+                prices=await _forexPriceMap.GetLatestPrices()
+            };
+            return Ok(JsonConvert.SerializeObject(pricesVar));
         }
 
         // GET api/values/5
