@@ -11,10 +11,10 @@ namespace forex_app_service.Controllers
     
     [Route("api/[controller]")]
     [ApiController]
-    public class ForexController : ControllerBase
+    public class ForexPricesController : ControllerBase
     {
         private readonly ForexPriceMap _forexPriceMap;
-        public ForexController(ForexPriceMap forexPriceMap)
+        public ForexPricesController(ForexPriceMap forexPriceMap)
         {   
             _forexPriceMap = forexPriceMap;
         }
