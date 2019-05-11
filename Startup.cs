@@ -26,6 +26,8 @@ namespace forex_app_service
             Configuration = configuration;
         }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -43,6 +45,14 @@ namespace forex_app_service
             {
                 cfg.AddProfile(new ForexPriceProfile());
                 
+            });
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.AllowAnyOrigin();
+                });
             });
 
             IMapper mapper = config.CreateMapper();
@@ -65,6 +75,7 @@ namespace forex_app_service
             }
 
             //app.UseHttpsRedirection();
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseMvc();
         }
     }
