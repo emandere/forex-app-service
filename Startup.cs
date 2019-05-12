@@ -52,7 +52,7 @@ namespace forex_app_service
                 builder =>
                 {
                    builder.WithOrigins("http://localhost:4200",
-                                    "http://www.contoso.com");
+                                    "http://localhost:126");
                 });
             });
 
