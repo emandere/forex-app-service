@@ -51,7 +51,8 @@ namespace forex_app_service
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.AllowAnyOrigin();
+                   builder.WithOrigins("http://localhost:4200",
+                                    "http://www.contoso.com");
                 });
             });
 
