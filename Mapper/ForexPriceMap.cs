@@ -24,5 +24,11 @@ namespace forex_app_service.Mapper
             var result = await _context.Prices.Find(_=>true).ToListAsync();
             return result.Select((priceMongo)=>_mapper.Map<ForexPrice>(priceMongo)).ToList();
         }
+
+        public async Task<List<ForexPrice>> GetLatestPrices(string indicator)
+        {
+            var result = await _context.Prices.Find(_=>true).ToListAsync();
+            return result.Select((priceMongo)=>_mapper.Map<ForexPrice>(priceMongo)).ToList();
+        }
     }    
 }

@@ -44,7 +44,7 @@ namespace forex_app_service
              var config = new AutoMapper.MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new ForexPriceProfile());
-                
+                cfg.AddProfile(new ForexPriceIndicatorProfile());
             });
             services.AddCors(options =>
             {
@@ -58,6 +58,7 @@ namespace forex_app_service
 
             IMapper mapper = config.CreateMapper();
             services.AddTransient<ForexPriceMap,ForexPriceMap>();
+            services.AddTransient<ForexPriceIndicatorMap,ForexPriceIndicatorMap>();
             services.AddSingleton(mapper);
             services.AddAutoMapper();
         }
