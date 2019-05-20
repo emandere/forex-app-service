@@ -42,7 +42,7 @@ namespace forex_app_service.Mapper
         {
             using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage response = await client.GetAsync($"http://forexapp:122/api/forexclasses/v1/dailyindicator/{indicator}/14/{pair}/20190513");
+                HttpResponseMessage response = await client.GetAsync($"http://localhost:122/api/forexclasses/v1/dailyindicator/{indicator}/14/{pair}/20190513");
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var indicatorList = JsonConvert.DeserializeObject<List<string>>(responseBody);
                 indicatorList.Add(pair);
