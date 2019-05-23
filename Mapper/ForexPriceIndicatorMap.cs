@@ -15,10 +15,12 @@ namespace forex_app_service.Mapper
     {
         private readonly IMapper _mapper;
         private readonly DbContext _context = null;
+        private readonly string _forexAppServiceBase;
          public ForexPriceIndicatorMap(IMapper mapper,IOptions<Settings> settings)
         {
             _mapper = mapper;
-            _context = new DbContext(settings);;
+            _context = new DbContext(settings);
+            _forexAppServiceBase = settings.Value.ForexAppServiceBase;
         }
 
         public async Task<List<ForexPriceIndicator>> GetLatestPrices(string indicator)
@@ -42,7 +44,7 @@ namespace forex_app_service.Mapper
         {
             using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage response = await client.GetAsync($"http://localhost:122/api/forexclasses/v1/dailyindicator/{indicator}/14/{pair}/20190513");
+                HttpResponseMessage response = await client.GetAsync($"{_forexAppServiceBase}/dailyindicator/{indicator}/14/{pair}/20190513");
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var indicatorList = JsonConvert.DeserializeObject<List<string>>(responseBody);
                 indicatorList.Add(pair);

@@ -4,5 +4,6 @@ namespace forex_app_service.Models
     {
         public string ConnectionString;
         public string Database;
+        public string ForexAppServiceBase;
     }
 }

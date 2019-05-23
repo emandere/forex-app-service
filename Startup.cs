@@ -39,6 +39,8 @@ namespace forex_app_service
                     = Configuration.GetSection("MongoConnection:ConnectionString").Value;
                 options.Database 
                     = Configuration.GetSection("MongoConnection:Database").Value;
+                options.ForexAppServiceBase
+                    = Configuration.GetSection("ForexAppService:Base").Value;    
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
              var config = new AutoMapper.MapperConfiguration(cfg =>
