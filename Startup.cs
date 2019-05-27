@@ -53,9 +53,12 @@ namespace forex_app_service
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
                 {
-                   builder.WithOrigins("http://localhost:4200",
-                                    "http://192.168.1.101:126",
-                                    "http://localhost:126");
+                    var origins = Configuration.GetSection("CORS:origins").GetChildren();
+                    foreach(var origin in origins)
+                    {
+                        builder.WithOrigins(origin.Value);
+                    }
+
                 });
             });
 
