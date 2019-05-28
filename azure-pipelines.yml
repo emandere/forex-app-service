@@ -10,7 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: docker build -t forex-app-service .
+- script: docker build -t $(dockerImage) .
   displayName: 'Run a one-line script'
 
 - script: |
