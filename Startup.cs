@@ -19,6 +19,7 @@ using forex_app_service.Mapper;
 
 namespace forex_app_service
 {
+    //Pipeline Tests
     public class Startup
     {
         public Startup(IConfiguration configuration)
