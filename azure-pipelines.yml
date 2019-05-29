@@ -6,8 +6,8 @@
 trigger:
 - master
 
-pool:
-  name:Default
+#pool:
+  #name:Default
   #vmImage: 'ubuntu-latest'
 
 steps:
