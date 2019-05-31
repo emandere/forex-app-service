@@ -9,7 +9,6 @@ namespace forex_app_service.Config
         public ForexPriceIndicatorProfile()
         {
             CreateMap<ForexPriceIndicator, ForexPriceMongo>()
-                .ForMember(x => x.Ask,opt => opt.Ignore())
                 .ForMember(x => x.Id, opt => opt.Ignore());
             CreateMap<ForexPriceMongo,ForexPriceIndicator>()
                 .ForMember(x=>x.Indicator,opt => opt.Ignore());

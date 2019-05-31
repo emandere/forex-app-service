@@ -44,7 +44,8 @@ namespace forex_app_service.Mapper
         {
             using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage response = await client.GetAsync($"{_forexAppServiceBase}/dailyindicator/{indicator}/14/{pair}/20190513");
+                string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+                HttpResponseMessage response = await client.GetAsync($"{_forexAppServiceBase}/dailyindicator/{indicator}/14/{pair}/{currentDate}");
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var indicatorList = JsonConvert.DeserializeObject<List<string>>(responseBody);
                 indicatorList.Add(pair);
