@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  web:
+  forex-app-service:
     image: 127.0.0.1:5000/forex-app-service
     build: .
     ports:
@@ -17,18 +17,26 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - mongodata:/data/db 
+      - mongodata:/data/db
   forexapp:
-    image: forexapp
+    image: 127.0.0.1:5000/forexapp
     ports:
       - "122:80"
     depends_on:
       - mongo
+  strategyapp:
+    image: 127.0.0.1:5000/strategyapp
+    depends_on:
+      - mongo
+  importdatafromcloudapp:
+      image: 127.0.0.1:5000/importdatafromcloudapp
+      depends_on:
+        - mongo
   forex-experiment:
-    image: forex-experiment
+    image: 127.0.0.1:5000/forex-experiment
     ports:
       - "8081:80"
     depends_on:
       - mongo
 volumes:
-  mongodata:  
+  mongodata:
