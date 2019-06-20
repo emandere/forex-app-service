@@ -18,5 +18,16 @@ namespace forex_app_service.Domain.Indicators
            double stdDev = Math.Sqrt((sumsquared/x.Count()) - Average(x)*Average(x));
            return stdDev;   
         }
+
+        public static double BollingerUpper(List<double> x)
+        {
+            double val = x.Last();
+            return val + 2* StdDev(x);
+        }
+        public static double BollingerLower(List<double> x)
+        {
+            double val = x.Last();
+            return val - 2* StdDev(x);
+        }
     }
 }

@@ -66,6 +66,7 @@ namespace forex_app_service
             IMapper mapper = config.CreateMapper();
             services.AddTransient<ForexPriceMap,ForexPriceMap>();
             services.AddTransient<ForexPriceIndicatorMap,ForexPriceIndicatorMap>();
+            services.AddTransient<ForexIndicatorMap,ForexIndicatorMap>();
             services.AddSingleton(mapper);
             services.AddAutoMapper();
         }
