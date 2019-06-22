@@ -14,13 +14,15 @@ namespace forex_app_service.Mapper
     public class ForexPriceIndicatorMap
     {
         private readonly IMapper _mapper;
+        private readonly ForexIndicatorMap _indicatorMap;
         private readonly DbContext _context = null;
         private readonly string _forexAppServiceBase;
-         public ForexPriceIndicatorMap(IMapper mapper,IOptions<Settings> settings)
+         public ForexPriceIndicatorMap(IMapper mapper,IOptions<Settings> settings,ForexIndicatorMap indicatorMap)
         {
             _mapper = mapper;
             _context = new DbContext(settings);
             _forexAppServiceBase = settings.Value.ForexAppServiceBase;
+            _indicatorMap = indicatorMap;
         }
 
         public async Task<List<ForexPriceIndicator>> GetLatestPrices(string indicator)
@@ -33,24 +35,17 @@ namespace forex_app_service.Mapper
             var forexPrices = result.Select((priceMongo)=>_mapper.Map<ForexPriceIndicator>(priceMongo)).ToList();
             foreach(var ind in indicators)
             {
-                forexPrices.Find(x => x.Instrument == ind[1]).Indicator = ind[0];
+                forexPrices.Find(x => x.Instrument == ind.Pair).Indicator = ind.Indicator.ToString();
             }
 
             return forexPrices;
 
         }
 
-        private async Task<List<string>> GetIndicator(string pair,string indicator)
+        private async Task<ForexIndicator> GetIndicator(string pair,string indicator)
         {
-            using (HttpClient client = new HttpClient())
-            {
-                string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
-                HttpResponseMessage response = await client.GetAsync($"{_forexAppServiceBase}/dailyindicator/{indicator}/14/{pair}/{currentDate}");
-                string responseBody = await response.Content.ReadAsStringAsync();
-                var indicatorList = JsonConvert.DeserializeObject<List<string>>(responseBody);
-                indicatorList.Add(pair);
-                return indicatorList;
-            }
+            string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+            return await _indicatorMap.GetIndicator(pair,indicator,currentDate,14);
         }
     }    
 }

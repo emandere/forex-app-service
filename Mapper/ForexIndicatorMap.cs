@@ -49,6 +49,7 @@ namespace forex_app_service.Mapper
             
             ForexIndicator ind = new ForexIndicator
             {
+                Pair = pair,
                 StartDate = startdate,
                 EndDate = enddt,
                 Indicator = Stats.BollingerLower(result.Select(z => z.Close).ToList()),
