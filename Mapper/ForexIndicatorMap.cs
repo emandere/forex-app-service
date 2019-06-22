@@ -43,6 +43,9 @@ namespace forex_app_service.Mapper
                 case "BelowBollinger":
                     indValue = Stats.BollingerLower(result.Select(z => z.Close).ToList());
                     break;
+                case "RSI":
+                    indValue = Stats.RSI(result.Select(z=> new List<double>{z.Open,z.Close}));
+                    break;
                 default:
                     break;    
             }                          
@@ -52,7 +55,7 @@ namespace forex_app_service.Mapper
                 Pair = pair,
                 StartDate = startdate,
                 EndDate = enddt,
-                Indicator = Stats.BollingerLower(result.Select(z => z.Close).ToList()),
+                Indicator = indValue,
                 IndicatorDisplay = indicator.ToString()
 
             };
