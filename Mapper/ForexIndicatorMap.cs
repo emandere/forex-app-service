@@ -37,14 +37,17 @@ namespace forex_app_service.Mapper
                                                 && x.Datetime < enddate)
                                       
                                        .ToListAsync();
-            double indValue = 0; 
+            double indValue = 0;
+            string indValueDisplay = indValue.ToString(); 
             switch(indicator)
             {
                 case "BelowBollinger":
                     indValue = Stats.BollingerLower(result.Select(z => z.Close).ToList());
+                    indValueDisplay = indValue.ToString();
                     break;
                 case "RSI":
                     indValue = Stats.RSI(result.Select(z=> new List<double>{z.Open,z.Close}));
+                    indValueDisplay = Convert.ToInt32(indValue).ToString();
                     break;
                 default:
                     break;    
@@ -56,7 +59,7 @@ namespace forex_app_service.Mapper
                 StartDate = startdate,
                 EndDate = enddt,
                 Indicator = indValue,
-                IndicatorDisplay = indicator.ToString()
+                IndicatorDisplay = indValueDisplay
 
             };
 
