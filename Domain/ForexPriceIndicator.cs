@@ -7,6 +7,7 @@ namespace forex_app_service.Domain
         public string Time { get; set; }   
         public double Bid { get; set; }
         public double Ask { get; set; }
-        public string Indicator { get; set; }
+        public double Indicator {get;set;}
+        public string IndicatorDisplay { get; set; }
     }   
 }

@@ -43,7 +43,7 @@ namespace forex_app_service.Mapper
             {
                 case "BelowBollinger":
                     indValue = Stats.BollingerLower(result.Select(z => z.Close).ToList());
-                    indValueDisplay = indValue.ToString();
+                    indValueDisplay = $"{indValue:0.####}";
                     break;
                 case "RSI":
                     indValue = Stats.RSI(result.Select(z=> new List<double>{z.Open,z.Close}));

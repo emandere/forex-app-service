@@ -35,7 +35,8 @@ namespace forex_app_service.Mapper
             var forexPrices = result.Select((priceMongo)=>_mapper.Map<ForexPriceIndicator>(priceMongo)).ToList();
             foreach(var ind in indicators)
             {
-                forexPrices.Find(x => x.Instrument == ind.Pair).Indicator = ind.Indicator.ToString();
+                forexPrices.Find(x => x.Instrument == ind.Pair).Indicator = ind.Indicator;
+                forexPrices.Find(x => x.Instrument == ind.Pair).IndicatorDisplay = ind.IndicatorDisplay;
             }
 
             return forexPrices;
