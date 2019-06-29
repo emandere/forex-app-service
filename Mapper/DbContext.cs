@@ -27,6 +27,14 @@ namespace forex_app_service.Mapper
                 return _database.GetCollection<ForexDailyPriceMongo>("forexdailyprices");
             }
         }
+
+        public IMongoCollection<ForexSessionMongo> ForexSessions
+        {
+            get
+            {
+                return _database.GetCollection<ForexSessionMongo>("session");
+            }
+        }
     }
 
 }

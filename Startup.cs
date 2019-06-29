@@ -48,6 +48,7 @@ namespace forex_app_service
             {
                 cfg.AddProfile(new ForexPriceProfile());
                 cfg.AddProfile(new ForexPriceIndicatorProfile());
+                cfg.AddProfile(new ForexSessionProfile());
             });
             services.AddCors(options =>
             {
@@ -67,6 +68,7 @@ namespace forex_app_service
             services.AddTransient<ForexPriceMap,ForexPriceMap>();
             services.AddTransient<ForexPriceIndicatorMap,ForexPriceIndicatorMap>();
             services.AddTransient<ForexIndicatorMap,ForexIndicatorMap>();
+            services.AddTransient<ForexSessionMap,ForexSessionMap>();
             services.AddSingleton(mapper);
             services.AddAutoMapper();
         }
