@@ -25,7 +25,7 @@ namespace forex_app_service.Mapper
         public async Task<ForexIndicator> GetIndicator(string pair,string indicator,string enddt,int duration)
         {
             DateTime enddate =  DateTime.Parse(enddt);
-            DateTime startdt = enddate.AddDays(-duration).ToLocalTime();
+            DateTime startdt = enddate.AddDays(-duration);
 
             string startdate = startdt.ToString("yyyy-MM-dd");
            
