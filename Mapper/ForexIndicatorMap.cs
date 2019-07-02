@@ -65,6 +65,30 @@ namespace forex_app_service.Mapper
 
             return ind;                           
 
+        }
+
+        public async Task<List<ForexDebugIndicator>> GetDebugInfo(string pair,string indicator,string enddt,int duration)
+        {
+            DateTime enddate =  DateTime.Parse(enddt);
+            DateTime startdt = enddate.AddDays(-duration);
+
+            string startdate = startdt.ToString("yyyy-MM-dd");
+           
+            
+
+            var result = await _context.DailyPrices
+                                       .Find( x => x.Pair == pair
+                                                && x.Datetime > startdt
+                                                && x.Datetime < enddate)
+                                      
+                                       .ToListAsync();
+            return result.Select(x => 
+                    new ForexDebugIndicator()
+                    {
+                        price=x.Close.ToString(),
+                        date = x.Date
+
+                    }).ToList();
         }   
     }
 }
