@@ -33,7 +33,7 @@ namespace forex_app_service.Mapper
 
             var result = await _context.DailyPrices
                                        .Find( x => x.Pair == pair
-                                                && x.Datetime > startdt
+                                                && x.Datetime >= startdt
                                                 && x.Datetime <= enddate)
                                       
                                        .ToListAsync();
@@ -78,7 +78,7 @@ namespace forex_app_service.Mapper
 
             var result = await _context.DailyPrices
                                        .Find( x => x.Pair == pair
-                                                && x.Datetime > startdt
+                                                && x.Datetime >= startdt
                                                 && x.Datetime <= enddate)
                                       
                                        .ToListAsync();
