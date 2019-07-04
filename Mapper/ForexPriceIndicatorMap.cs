@@ -39,7 +39,7 @@ namespace forex_app_service.Mapper
                 forexPrices.Find(x => x.Instrument == ind.Pair).IndicatorDisplay = ind.IndicatorDisplay;
             }
 
-            return forexPrices;
+            return forexPrices.OrderBy( x => x.Instrument).ToList();
 
         }
 
