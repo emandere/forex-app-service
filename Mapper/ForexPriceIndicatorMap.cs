@@ -28,7 +28,7 @@ namespace forex_app_service.Mapper
         public async Task<List<ForexPriceIndicator>> GetLatestPrices(string indicator)
         {
             var result = await _context.Prices.Find(_=>true).ToListAsync();
-            var indicatorTasks = result.Select(x => GetIndicator(x.Instrument,indicator));
+            var indicatorTasks = result.Select(x => GetIndicator(x.Instrument,indicator,x.Time));
 
             var indicators = await Task.WhenAll(indicatorTasks);
 
@@ -43,9 +43,9 @@ namespace forex_app_service.Mapper
 
         }
 
-        private async Task<ForexIndicator> GetIndicator(string pair,string indicator)
+        private async Task<ForexIndicator> GetIndicator(string pair,string indicator,DateTime latestDate)
         {
-            string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+            string currentDate = latestDate.ToString("yyyy-MM-dd");
             return await _indicatorMap.GetIndicator(pair,indicator,currentDate,14);
         }
     }    
