@@ -18,6 +18,13 @@ namespace forex_app_service.Config
                         )
                 )
                 .ForMember
+                ( dest=>dest.CurrentTime,
+                        opts=>opts.MapFrom
+                        (
+                            src => DateTime.Parse(src.CurrentTime).ToString("yyyy-MM-dd")
+                        )
+                )
+                .ForMember
                 (dest=>dest.EndDate,
                         opts=>opts.MapFrom
                         (
