@@ -24,7 +24,7 @@ namespace forex_app_service.Controllers
         {
             var sessionsVar = new 
             { 
-                prices=await _forexSessionMap.GetLiveSessions()
+                sessions=await _forexSessionMap.GetLiveSessions()
             };
             return Ok(JsonConvert.SerializeObject(sessionsVar));
         }
