@@ -2,6 +2,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace forex_app_service.Domain
 {
@@ -25,9 +26,13 @@ namespace forex_app_service.Domain
         
         public string CurrentTime { get; set; }
 
+        public double RealizedPL{get=>Math.Round(SessionUser.RealizedPL,2);}
+
         public Strategy Strategy { get; set; }
 
         public SessionUser SessionUser { get; set; }
+
+        public double Balance { get => Math.Round(SessionUser.Balance,2);}
 
         public string PercentComplete { get; set; }
 
@@ -45,6 +50,17 @@ namespace forex_app_service.Domain
 
         public object Status { get; set; }
         public Accounts Accounts { get; set; }
+
+        public double Balance 
+        {
+            get => Accounts.Primary.BalanceHistory.Last().Amount;
+                
+        }
+
+        public double RealizedPL 
+        {
+            get => Accounts.Primary.RealizedPL ;
+        }
     }
 
     public  class Accounts
@@ -70,7 +86,10 @@ namespace forex_app_service.Domain
         public long MarginRatio { get; set; }
 
       
-        public double RealizedPl { get; set; }
+        public double RealizedPL 
+        { 
+            get => BalanceHistory.Last().Amount - BalanceHistory.First().Amount;
+        }
 
       
         public Trade[] Trades { get; set; }
