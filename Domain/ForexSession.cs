@@ -89,7 +89,7 @@ namespace forex_app_service.Domain
 
         public double RealizedPL 
         {
-            get => Accounts.Primary.RealizedPL ;
+            get => Accounts.Primary.RealizedPL;
         }
     }
 
