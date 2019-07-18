@@ -57,6 +57,36 @@ namespace forex_app_service.Domain
                 
         }
 
+        public int ClosedTrades
+        {
+            get => Accounts.Primary.ClosedTrades.Count();
+        }
+
+        public int OpenTrades
+        {
+            get => Accounts.Primary.Trades.Count();
+        }
+
+        public double PercentProfitableClosed
+        {
+            get => ClosedTrades > 0 ? Math.Round(PercentProfitableClosedCount(),2): 0;
+        }
+
+        private double PercentProfitableClosedCount()
+        {
+            return (Accounts.Primary.ClosedTrades.Where(x=>x.PLCalc() > 0).Count() / (double)ClosedTrades) * 100.0;
+        }
+
+        public double PercentProfitableOpen
+        {
+            get => OpenTrades > 0 ? Math.Round(PercentProfitableOpenCount(),2): 0;
+        }
+
+        private double PercentProfitableOpenCount()
+        {
+            return (Accounts.Primary.Trades.Where(x=>x.PLCalc() > 0).Count() / (double)OpenTrades) * 100.0;
+        }
+
         public double RealizedPL 
         {
             get => Accounts.Primary.RealizedPL ;
