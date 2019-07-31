@@ -12,6 +12,14 @@ namespace forex_app_service.Domain.Indicators
             double xavg = sum / x.Count();
             return xavg;
         }
+
+        public static double Average(IEnumerable<double> x,int y)
+        {
+            double sum = x.Aggregate((t,e)=>t+e);
+            double xavg = sum / y;
+            return xavg;
+        }
+
         public static double StdDev(IEnumerable<double> x)
         {
            double sumsquared = x.Select(t=>t*t).Aggregate((t,e)=>t+e);
@@ -38,11 +46,13 @@ namespace forex_app_service.Domain.Indicators
             double RS = 100.0;
 
             if(losses.Count()>0)
-                RS = Math.Abs(Average(gains)/Average(losses));
+                RS = Math.Abs(Average(gains,x.Count())/Average(losses,x.Count()));
 
             double RSI = 100 - (100/(1+RS));
 
             return RSI;
         }
+
+
     }
 }
