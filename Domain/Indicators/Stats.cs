@@ -46,6 +46,21 @@ namespace forex_app_service.Domain.Indicators
             double RS = 100.0;
 
             if(losses.Count()>0)
+                RS = Math.Abs(Average(gains)/Average(losses));
+
+            double RSI = 100 - (100/(1+RS));
+
+            return RSI;
+        }
+
+        public static double RSIReal(IEnumerable<List<double>> x)
+        {
+            var diff = x.Select((t)=>t[1]-t[0]);
+            var gains = diff.Where((t)=>t>0);
+            var losses = diff.Where((t)=>t<0);
+            double RS = 100.0;
+
+            if(losses.Count()>0)
                 RS = Math.Abs(Average(gains,x.Count())/Average(losses,x.Count()));
 
             double RSI = 100 - (100/(1+RS));
