@@ -13,6 +13,7 @@ namespace forex_app_service.Domain
             Account acc = new Account();
             SortedSet<string> setSessionDates = new SortedSet<string>();
             SortedSet<string> setCloseDates = new SortedSet<string>();
+            List<BalanceHistory> hist = new List<BalanceHistory>();
             double pairAmount = SessionUser.Accounts
                                             .Primary
                                             .BalanceHistory[0]
@@ -34,7 +35,7 @@ namespace forex_app_service.Domain
                 setCloseDates.Add(DateTime.Parse(closedTrade.CloseDate).ToString("yyyy-MM-dd"));
             }
 
-            List<BalanceHistory> hist = new List<BalanceHistory>();
+            
             foreach(string sessdate in setSessionDates)
             {
                 if(setCloseDates.Contains(sessdate))
