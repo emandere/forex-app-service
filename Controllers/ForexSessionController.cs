@@ -40,6 +40,20 @@ namespace forex_app_service.Controllers
             return Ok(JsonConvert.SerializeObject(sessionsVar));
         }
 
+        // GET api/values/5
+        [HttpGet("{id}/{pair}")]
+
+        public async Task<ActionResult> Get(string id,string pair)
+        {
+            var sessions=await _forexSessionMap.GetLiveSession(id);
+            var accountsbypair = sessions.Select(x=>x.GetAccountByPair(pair)).ToArray();
+            var AccountByPair = new 
+            { 
+                accounts = accountsbypair
+            };
+            return Ok(JsonConvert.SerializeObject(accountsbypair));
+        }
+
         // POST api/values
         [HttpPost]
         public void Post([FromBody] string value)

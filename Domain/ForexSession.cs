@@ -8,6 +8,48 @@ namespace forex_app_service.Domain
 {
     public  class ForexSession
     {
+        public Account GetAccountByPair(string pair)
+        {
+            Account acc = new Account();
+            SortedSet<string> setSessionDates = new SortedSet<string>();
+            SortedSet<string> setCloseDates = new SortedSet<string>();
+            double pairAmount = SessionUser.Accounts
+                                            .Primary
+                                            .BalanceHistory[0]
+                                            .Amount;
+            
+            acc.ClosedTrades = SessionUser.Accounts
+                                            .Primary
+                                            .ClosedTrades
+                                            .Where(x=>x.Pair==pair)
+                                            .ToArray();
+
+            foreach(var history in SessionUser.Accounts.Primary.BalanceHistory)
+            {                               
+                setSessionDates.Add(history.Date);
+            }
+
+            foreach(Trade closedTrade in  acc.ClosedTrades)
+            {
+                setCloseDates.Add(DateTime.Parse(closedTrade.CloseDate).ToString("yyyy-MM-dd"));
+            }
+
+            List<BalanceHistory> hist = new List<BalanceHistory>();
+            foreach(string sessdate in setSessionDates)
+            {
+                if(setCloseDates.Contains(sessdate))
+                {
+                    pairAmount+=acc.ClosedTrades.Where(x=>DateTime.Parse(x.CloseDate).ToString("yyyy-MM-dd")==sessdate)
+                                                .Select(x=>x.PL)
+                                                .Sum();
+                }
+                hist.Add(new BalanceHistory(){Date=sessdate,Amount=pairAmount});
+            }
+            
+            acc.BalanceHistory = hist.ToArray();
+
+            return acc;
+        }
         public string Id { get; set; }
         public string idinfo { get; set; }
 
@@ -91,6 +133,8 @@ namespace forex_app_service.Domain
         {
             get => Accounts.Primary.RealizedPL;
         }
+
+        
     }
 
     public  class Accounts
@@ -136,6 +180,7 @@ namespace forex_app_service.Domain
      
         public long Idcount { get; set; }
     }
+
 
     public  class BalanceHistory
     {
