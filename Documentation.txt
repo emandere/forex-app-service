@@ -1,0 +1,5 @@
+Setting up Docker stack
+1. Initialize Swarm
+docker swarm init
+2. Create registry
+docker service create --name registry --publish published=5000,target=5000 registry:2
