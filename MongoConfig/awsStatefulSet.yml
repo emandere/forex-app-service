@@ -25,8 +25,7 @@ spec:
   template:
     metadata:
       labels:
-        role: mongo
-        environment: test
+        app: mongo
     spec:
       terminationGracePeriodSeconds: 10
       containers:

@@ -9,3 +9,7 @@ mongodump --archive=testdb.gz --gzip --db test
 sudo docker cp mongo:/testdb.gz .
 ssh ... testdb.gz
 mongorestore --gzip --archive=testdb.gz --db testdb 
+
+curl -sfL https://get.k3s.io | sh -   
+sudo chmod -R 777 /etc/rancher/k3s/k3s.yaml
+/usr/local/bin/k3s-uninstall.sh
