@@ -10,7 +10,7 @@ spec:
     targetPort: 27017
   clusterIP: None
   selector:
-    role: mongo
+    app: mongo
 ---
 apiVersion: apps/v1
 kind: StatefulSet
