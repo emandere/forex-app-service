@@ -3,3 +3,9 @@ Setting up Docker stack
 docker swarm init
 2. Create registry
 docker service create --name registry --publish published=5000,target=5000 registry:2
+
+Dumping Mongo Database
+mongodump --archive=testdb.gz --gzip --db test
+sudo docker cp mongo:/testdb.gz .
+ssh ... testdb.gz
+mongorestore --gzip --archive=testdb.gz --db testdb 
