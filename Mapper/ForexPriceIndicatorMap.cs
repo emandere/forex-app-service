@@ -6,7 +6,6 @@ using System.Net.Http;
 using AutoMapper;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using Newtonsoft.Json;
 using forex_app_service.Domain;
 using forex_app_service.Models;
 namespace forex_app_service.Mapper

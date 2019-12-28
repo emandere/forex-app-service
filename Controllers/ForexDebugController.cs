@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using forex_app_service.Mapper;
 
 namespace forex_app_service.Controllers
@@ -32,7 +31,7 @@ namespace forex_app_service.Controllers
             { 
                 prices=await _forexIndicatorMap.GetDebugInfo(pair,indicator,enddate,duration)
             };
-            return Ok(JsonConvert.SerializeObject(pricesVar));
+            return Ok(pricesVar);
         }
     }
 }

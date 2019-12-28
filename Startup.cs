@@ -43,7 +43,7 @@ namespace forex_app_service
                 options.ForexAppServiceBase
                     = Configuration.GetSection("ForexAppService:Base").Value;    
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
              var config = new AutoMapper.MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new ForexPriceProfile());
@@ -70,7 +70,7 @@ namespace forex_app_service
             services.AddTransient<ForexIndicatorMap,ForexIndicatorMap>();
             services.AddTransient<ForexSessionMap,ForexSessionMap>();
             services.AddSingleton(mapper);
-            services.AddAutoMapper();
+            //services.AddAutoMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

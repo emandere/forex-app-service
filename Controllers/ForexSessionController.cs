@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using forex_app_service.Mapper;
 
 namespace forex_app_service.Controllers
@@ -26,7 +25,7 @@ namespace forex_app_service.Controllers
             { 
                 sessions=await _forexSessionMap.GetLiveSessions()
             };
-            return Ok(JsonConvert.SerializeObject(sessionsVar));
+            return Ok(sessionsVar);
         }
 
         // GET api/values/5
@@ -37,7 +36,7 @@ namespace forex_app_service.Controllers
             { 
                 sessions=await _forexSessionMap.GetLiveSession(id)
             };
-            return Ok(JsonConvert.SerializeObject(sessionsVar));
+            return Ok(sessionsVar);
         }
 
         // GET api/values/5
@@ -51,7 +50,7 @@ namespace forex_app_service.Controllers
             { 
                 accounts = accountsbypair
             };
-            return Ok(JsonConvert.SerializeObject(accountsbypair));
+            return Ok(accountsbypair);
         }
 
         // POST api/values
