@@ -89,7 +89,7 @@ namespace forex_app_service
 
             //app.UseHttpsRedirection();
             app.UseCors(MyAllowSpecificOrigins);
-            app.UseMvc();
+            //app.UseMvc();
         }
     }
 }
