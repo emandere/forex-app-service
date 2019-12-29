@@ -43,7 +43,7 @@ namespace forex_app_service
                 options.ForexAppServiceBase
                     = Configuration.GetSection("ForexAppService:Base").Value;    
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
              var config = new AutoMapper.MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new ForexPriceProfile());
