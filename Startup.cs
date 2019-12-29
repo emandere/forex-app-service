@@ -44,7 +44,8 @@ namespace forex_app_service
                     = Configuration.GetSection("ForexAppService:Base").Value;    
             });
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            //services.AddMvc(option => option.EnableEndpointRouting = false);
+            //services.AddMvc(option => option.EnableEndpointRouting = true);
+           
             services.AddControllers();
              var config = new AutoMapper.MapperConfiguration(cfg =>
             {
@@ -91,6 +92,12 @@ namespace forex_app_service
             //app.UseHttpsRedirection();
             app.UseCors(MyAllowSpecificOrigins);
             //app.UseMvc();
+            app.UseRouting(); 
+            app.UseEndpoints(endpoints =>
+            {
+                // Mapping of endpoints goes here:
+                endpoints.MapControllers();
+            });
         }
     }
 }
