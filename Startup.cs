@@ -44,7 +44,7 @@ namespace forex_app_service
                     = Configuration.GetSection("ForexAppService:Base").Value;    
             });
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddMvc(option => option.EnableEndpointRouting = true);
              var config = new AutoMapper.MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new ForexPriceProfile());
