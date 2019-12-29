@@ -53,6 +53,12 @@ namespace forex_app_service
                 cfg.AddProfile(new ForexPriceIndicatorProfile());
                 cfg.AddProfile(new ForexSessionProfile());
             });
+
+            var profiles = new List<Profile>{
+                new ForexPriceProfile(),
+                new ForexPriceIndicatorProfile(), 
+                new ForexSessionProfile()   
+            };
             services.AddCors(options =>
             {
                 options.AddPolicy(MyAllowSpecificOrigins,
@@ -67,19 +73,19 @@ namespace forex_app_service
                 });
             });
 
-            IMapper mapper = config.CreateMapper();
+            //IMapper mapper = config.CreateMapper();
             services.AddTransient<ForexPriceMap,ForexPriceMap>();
             services.AddTransient<ForexPriceIndicatorMap,ForexPriceIndicatorMap>();
             services.AddTransient<ForexIndicatorMap,ForexIndicatorMap>();
             services.AddTransient<ForexSessionMap,ForexSessionMap>();
-            services.AddSingleton(mapper);
-            //services.AddAutoMapper();
+            //services.AddSingleton(mapper);
+            services.AddAutoMapper(c=>c.AddProfiles(profiles),typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.EnvironmentName=="Development")
             {
                 app.UseDeveloperExceptionPage();
             }

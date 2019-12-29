@@ -194,7 +194,6 @@ namespace forex_app_service.Domain
 
     public  class Trade
     {
-        private double _pl;
         public long? Id { get; set; }
 
      

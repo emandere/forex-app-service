@@ -40,6 +40,9 @@ namespace forex_app_service.Config
 
             CreateMap<Account,AccountMongo>();
             CreateMap<AccountMongo,Account>();
+            
+            CreateMap<StrategyMongo,Strategy>();
+            CreateMap<Strategy,StrategyMongo>();
 
             CreateMap<BalanceHistory,BalanceHistoryMongo>();
             CreateMap<BalanceHistoryMongo,BalanceHistory>()
