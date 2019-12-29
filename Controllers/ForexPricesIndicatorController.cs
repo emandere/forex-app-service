@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
+using AutoMapper;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using forex_app_service.Mapper;
+using forex_app_service.Models;
 
 namespace forex_app_service.Controllers
 {
@@ -13,9 +13,11 @@ namespace forex_app_service.Controllers
     public class ForexPricesIndicatorController : ControllerBase
     {
         private readonly ForexPriceIndicatorMap _forexPriceIndicatorMap;
-        public ForexPricesIndicatorController(ForexPriceIndicatorMap forexPriceIndicatorMap)
+        private readonly IMapper _mapper;
+        public ForexPricesIndicatorController(IMapper mapper,ForexPriceIndicatorMap forexPriceIndicatorMap)
         {   
             _forexPriceIndicatorMap = forexPriceIndicatorMap;
+            _mapper = mapper;
         }
         // GET api/values
         [HttpGet]
@@ -28,9 +30,11 @@ namespace forex_app_service.Controllers
         [HttpGet("{indicator}")]
         public async Task<ActionResult> Get(string indicator)
         {
+            var prices=await _forexPriceIndicatorMap.GetLatestPrices(indicator);
+            var pricesDTO = prices.Select((price)=>_mapper.Map<ForexPriceIndicatorDTO>(price)).ToList();
             var pricesVar = new 
             { 
-                prices=await _forexPriceIndicatorMap.GetLatestPrices(indicator)
+                prices = pricesDTO
             };
             return Ok(pricesVar);
         }
