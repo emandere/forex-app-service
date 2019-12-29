@@ -9,6 +9,7 @@ namespace forex_app_service.Config
         public ForexSessionProfile()
         {
             CreateMap<ForexSession, ForexSessionMongo>();
+            CreateMap<ForexSession, ForexSessionDTO>();
             CreateMap<ForexSessionMongo, ForexSession>()
                 .ForMember
                 ( dest=>dest.StartDate,
@@ -31,19 +32,23 @@ namespace forex_app_service.Config
                             src => DateTime.Parse(src.EndDate).ToString("yyyy-MM-dd")
                         )
                 );
-
+            CreateMap<SessionUser,SessionUserDTO>();
             CreateMap<SessionUser,SessionUserMongo>();
             CreateMap<SessionUserMongo,SessionUser>();
 
+            CreateMap<Accounts,AccountsDTO>();
             CreateMap<Accounts,AccountsMongo>();
             CreateMap<AccountsMongo,Accounts>();
 
+            CreateMap<Account,AccountDTO>();
             CreateMap<Account,AccountMongo>();
             CreateMap<AccountMongo,Account>();
             
+            CreateMap<Strategy,StrategyDTO>();
             CreateMap<StrategyMongo,Strategy>();
             CreateMap<Strategy,StrategyMongo>();
 
+            CreateMap<BalanceHistory,BalanceHistoryDTO>();
             CreateMap<BalanceHistory,BalanceHistoryMongo>();
             CreateMap<BalanceHistoryMongo,BalanceHistory>()
                 .ForMember
@@ -55,8 +60,12 @@ namespace forex_app_service.Config
                 )    
             ;
 
+
+            CreateMap<Trade,TradeDTO>();
             CreateMap<Trade,TradeMongo>();
-            CreateMap<TradeMongo,Trade>().ForMember(x => x.PL, opt => opt.Ignore());;
+            CreateMap<TradeMongo,Trade>().ForMember(x => x.PL, opt => opt.Ignore());
+
+            CreateMap<Order,OrderDTO>();
             CreateMap<Order,OrderMongo>();
             CreateMap<OrderMongo,Order>();
                

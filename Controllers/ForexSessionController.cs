@@ -1,9 +1,11 @@
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using forex_app_service.Mapper;
+using forex_app_service.Models;
 
 namespace forex_app_service.Controllers
 {
@@ -13,18 +15,24 @@ namespace forex_app_service.Controllers
     public class ForexSessionController : ControllerBase
     {
         private readonly ForexSessionMap _forexSessionMap;
-        public ForexSessionController(ForexSessionMap forexSessionMap)
+        private readonly IMapper _mapper;
+
+        public ForexSessionController(IMapper mapper,ForexSessionMap forexSessionMap)
         {   
             _forexSessionMap = forexSessionMap;
+            _mapper = mapper;
         }
         // GET api/values
         [HttpGet]
         public async Task<ActionResult> Get()
         {
+            var sessions=await _forexSessionMap.GetLiveSessions();
+            var sessionsDTO = sessions.Select((session)=>_mapper.Map<ForexSessionDTO>(session)).ToList();
             var sessionsVar = new 
             { 
-                sessions=await _forexSessionMap.GetLiveSessions()
+                sessions = sessionsDTO
             };
+            
             return Ok(sessionsVar);
         }
 
