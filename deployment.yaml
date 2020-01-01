@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: forex-app-service
-        image: emandere/forex-app-service
+        image: emandere/forex-app-service-arm
         ports:
         - containerPort: 80
