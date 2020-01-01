@@ -33,6 +33,10 @@ spec:
           image: arm64v8/mongo
           command:
             - mongod
+            - "--wiredTigerCacheSizeGB"
+            - "0.25"
+            - "--bind_ip"
+            - "0.0.0.0"
           ports:
             - containerPort: 27017
           volumeMounts:
