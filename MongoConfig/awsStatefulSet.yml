@@ -33,8 +33,6 @@ spec:
           image: arm64v8/mongo
           command:
             - mongod
-            - "--replSet"
-            - rs0
           ports:
             - containerPort: 27017
           volumeMounts:
