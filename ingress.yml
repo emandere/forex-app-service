@@ -5,4 +5,4 @@ metadata:
 spec:
   backend:
     serviceName: forex-app-service
-    servicePort: 8080
+    servicePort: 80
