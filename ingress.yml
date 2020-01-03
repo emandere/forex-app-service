@@ -3,6 +3,10 @@ kind: Ingress
 metadata:
   name: basic-ingress
 spec:
-  backend:
-    serviceName: forex-app-service
-    servicePort: 80
+    rules:
+        - http:
+            paths:
+            - path: /service
+              backend:
+                serviceName: forex-app-service
+                servicePort: 80
