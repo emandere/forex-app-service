@@ -6,11 +6,11 @@ spec:
     rules:
         - http:
             paths:
-            - path: /
+            - path: /*
               backend:
                 serviceName: forex-app
                 servicePort: 80    
-            - path: /service
+            - path: /service/*
               backend:
                 serviceName: forex-app-service
                 servicePort: 80
