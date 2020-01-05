@@ -8,7 +8,7 @@ spec:
             paths:
             - path: /
               backend:
-                serviceName: forex-app-service
+                serviceName: forex-app
                 servicePort: 80    
             - path: /service
               backend:
