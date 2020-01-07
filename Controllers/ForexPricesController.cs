@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using forex_app_service.Mapper;
+using forex_app_service.Models;
 
 namespace forex_app_service.Controllers
 {
@@ -37,8 +38,10 @@ namespace forex_app_service.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] ForexPriceDTO price)
         {
+            await _forexPriceMap.AddPrice(price);
+            return Ok("success");
         }
 
         // PUT api/values/5

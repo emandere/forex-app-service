@@ -24,5 +24,12 @@ namespace forex_app_service.Mapper
             var result = await _context.Prices.Find(_=>true).ToListAsync();
             return result.Select((priceMongo)=>_mapper.Map<ForexPrice>(priceMongo)).ToList();
         }
+
+        public async Task AddPrice(ForexPriceDTO item)
+        {
+        
+            await _context.Prices.InsertOneAsync(_mapper.Map<ForexPriceMongo>(item));
+            
+        }
     }    
 }
