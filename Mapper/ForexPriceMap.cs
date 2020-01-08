@@ -31,5 +31,15 @@ namespace forex_app_service.Mapper
             await _context.Prices.InsertOneAsync(_mapper.Map<ForexPriceMongo>(item));
             
         }
+
+        public async Task SaveRealTimePrice(string instrument,ForexPriceDTO item)
+        {
+            var priceLatest = _mapper.Map<ForexPriceMongo>(item);
+            priceLatest.Id = instrument + item.Time;
+            //await _context.LatestPrices.ReplaceOneAsync(x=>x.Instrument==instrument,priceLatest);
+            await _context.LatestPrices.DeleteOneAsync(x=>x.Instrument==instrument);
+            await _context.LatestPrices.InsertOneAsync(priceLatest);
+            
+        }
     }    
 }

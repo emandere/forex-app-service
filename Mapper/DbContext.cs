@@ -16,6 +16,14 @@ namespace forex_app_service.Mapper
         {
             get
             {
+                return _database.GetCollection<ForexPriceMongo>("rawprices");
+            }
+        }
+
+        public IMongoCollection<ForexPriceMongo> LatestPrices
+        {
+            get
+            {
                 return _database.GetCollection<ForexPriceMongo>("rawpriceslatest");
             }
         }

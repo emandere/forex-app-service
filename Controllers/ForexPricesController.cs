@@ -45,9 +45,11 @@ namespace forex_app_service.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{instrument}")]
+        public async Task<ActionResult> Put(string instrument, [FromBody] ForexPriceDTO price)
         {
+            await _forexPriceMap.SaveRealTimePrice(instrument,price);
+            return Ok("success");
         }
 
         // DELETE api/values/5
