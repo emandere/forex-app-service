@@ -56,6 +56,7 @@ namespace forex_app_service
 
             var profiles = new List<Profile>{
                 new ForexPriceProfile(),
+                new ForexDailyPriceProfile(),
                 new ForexPriceIndicatorProfile(), 
                 new ForexSessionProfile()   
             };
@@ -75,6 +76,7 @@ namespace forex_app_service
 
             //IMapper mapper = config.CreateMapper();
             services.AddTransient<ForexPriceMap,ForexPriceMap>();
+            services.AddTransient<ForexDailyPriceMap,ForexDailyPriceMap>();
             services.AddTransient<ForexPriceIndicatorMap,ForexPriceIndicatorMap>();
             services.AddTransient<ForexIndicatorMap,ForexIndicatorMap>();
             services.AddTransient<ForexSessionMap,ForexSessionMap>();
