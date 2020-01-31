@@ -30,5 +30,14 @@ namespace forex_app_service.Mapper
             var result = await _context.ForexSessions.Find(x=>x.Id == sessionId).ToListAsync();
             return result.Select((sessionMongo)=>_mapper.Map<ForexSession>(sessionMongo)).ToList();
         }
+
+        public async Task SaveSessions(IEnumerable<ForexSessionDTO> sessions)
+        {
+            foreach(var session in sessions)
+            {
+                var sessionMongo = _mapper.Map<ForexSessionMongo>(session);
+                var replace =await  _context.ForexSessions.ReplaceOneAsync(sess => sess.Id==sessionMongo.Id,sessionMongo);
+            }
+        }
     }    
 }
