@@ -10,6 +10,13 @@ namespace forex_app_service.Config
         {
             CreateMap<ForexSession, ForexSessionMongo>();
             CreateMap<ForexSession, ForexSessionDTO>();
+            CreateMap<ForexSessionInDTO,ForexSessionDTO>()
+                .ForMember(dest => dest.SessionType,
+                    opts => opts.MapFrom
+                    (
+                        src => src.SessionType.Value
+                    )
+                );
             CreateMap<ForexSessionMongo, ForexSession>()
                 .ForMember
                 ( dest=>dest.StartDate,
@@ -32,21 +39,33 @@ namespace forex_app_service.Config
                             src => DateTime.Parse(src.EndDate).ToString("yyyy-MM-dd")
                         )
                 );
+            CreateMap<ForexSessionDTO, ForexSession>();
+
+
             CreateMap<SessionUser,SessionUserDTO>();
             CreateMap<SessionUser,SessionUserMongo>();
             CreateMap<SessionUserMongo,SessionUser>();
+            CreateMap<SessionUserInDTO,SessionUserDTO>();
+            CreateMap<SessionUserDTO,SessionUser>();
 
             CreateMap<Accounts,AccountsDTO>();
             CreateMap<Accounts,AccountsMongo>();
             CreateMap<AccountsMongo,Accounts>();
+            CreateMap<AccountsInDTO,AccountsDTO>();
+            CreateMap<AccountsDTO,Accounts>();
+
 
             CreateMap<Account,AccountDTO>();
             CreateMap<Account,AccountMongo>();
             CreateMap<AccountMongo,Account>();
+            CreateMap<AccountInDTO,AccountDTO>();
+            CreateMap<AccountDTO,Account>();
             
             CreateMap<Strategy,StrategyDTO>();
             CreateMap<StrategyMongo,Strategy>();
             CreateMap<Strategy,StrategyMongo>();
+            CreateMap<StrategyInDTO,StrategyDTO>();
+            CreateMap<StrategyDTO,Strategy>();
 
             CreateMap<BalanceHistory,BalanceHistoryDTO>();
             CreateMap<BalanceHistory,BalanceHistoryMongo>();
@@ -59,15 +78,20 @@ namespace forex_app_service.Config
                         )
                 )    
             ;
-
+            CreateMap<BalanceHistoryInDTO,BalanceHistoryDTO>();
+            CreateMap<BalanceHistoryDTO,BalanceHistory>();
 
             CreateMap<Trade,TradeDTO>();
             CreateMap<Trade,TradeMongo>();
             CreateMap<TradeMongo,Trade>().ForMember(x => x.PL, opt => opt.Ignore());
+            CreateMap<TradeInDTO,TradeDTO>();
+            CreateMap<TradeDTO,Trade>();
 
             CreateMap<Order,OrderDTO>();
             CreateMap<Order,OrderMongo>();
             CreateMap<OrderMongo,Order>();
+            CreateMap<OrderInDTO,OrderDTO>();
+            CreateMap<OrderDTO,Order>();
                
         }
 

@@ -63,7 +63,7 @@ namespace forex_app_service.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] ForexSessionDTO[] sessions)
+        public async Task<ActionResult> Post([FromBody] ForexSessionInDTO[] sessions)
         {
             await _forexSessionMap.SaveSessions(sessions);
             return Ok();

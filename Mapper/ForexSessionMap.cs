@@ -31,11 +31,15 @@ namespace forex_app_service.Mapper
             return result.Select((sessionMongo)=>_mapper.Map<ForexSession>(sessionMongo)).ToList();
         }
 
-        public async Task SaveSessions(IEnumerable<ForexSessionDTO> sessions)
+        public async Task SaveSessions(IEnumerable<ForexSessionInDTO> sessions)
         {
             foreach(var session in sessions)
             {
-                var sessionMongo = _mapper.Map<ForexSessionMongo>(session);
+                var sessionIn = _mapper.Map<ForexSessionDTO>(session);  
+                var sessionModel = _mapper.Map<ForexSession>(sessionIn);    
+                var sessionMongo = _mapper.Map<ForexSessionMongo>(sessionModel);
+                sessionMongo.idinfo = sessionIn.Id;
+                sessionMongo.ExperimentId="NoExperiment";
                 var replace =await  _context.ForexSessions.ReplaceOneAsync(sess => sess.Id==sessionMongo.Id,sessionMongo);
             }
         }
