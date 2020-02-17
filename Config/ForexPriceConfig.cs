@@ -11,7 +11,9 @@ namespace forex_app_service.Config
             CreateMap<ForexPrice, ForexPriceDTO>();
             CreateMap<ForexPrice, ForexPriceMongo>()
                 .ForMember(x => x.Id, opt => opt.Ignore());
-             CreateMap<ForexPriceDTO, ForexPriceMongo>()
+            CreateMap<ForexPriceDTO, ForexPriceMongo>()
+                .ForMember(x => x.Id, opt => opt.Ignore());
+            CreateMap<ForexPriceDTO, ForexRealPriceMongo>()
                 .ForMember(x => x.Id, opt => opt.Ignore());
             CreateMap<ForexPriceMongo, ForexPrice>();
 

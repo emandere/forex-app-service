@@ -28,7 +28,21 @@ namespace forex_app_service.Mapper
         public async Task AddPrice(ForexPriceDTO item)
         {
         
-            await _context.Prices.InsertOneAsync(_mapper.Map<ForexPriceMongo>(item));
+            await _context.Prices.InsertOneAsync(_mapper.Map<ForexRealPriceMongo>(item));
+            
+        }
+
+         public async Task AddPrices(IEnumerable<ForexPriceDTO> items)
+        {
+            foreach(var price in items)
+            {
+                var findPrice =  await _context.Prices.CountDocumentsAsync(x=>x.Instrument==price.Instrument && x.Time == price.UTCTime);    
+                if(findPrice == 0)
+                {
+                    await _context.Prices.InsertOneAsync( _mapper.Map<ForexRealPriceMongo>(price));
+                }
+             
+            }
             
         }
 

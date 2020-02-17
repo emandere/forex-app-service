@@ -12,11 +12,11 @@ namespace forex_app_service.Mapper
             if (client != null)
                 _database = client.GetDatabase(settings.Value.Database);
         }
-        public IMongoCollection<ForexPriceMongo> Prices
+        public IMongoCollection<ForexRealPriceMongo> Prices
         {
             get
             {
-                return _database.GetCollection<ForexPriceMongo>("rawprices");
+                return _database.GetCollection<ForexRealPriceMongo>("rawprices");
             }
         }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json.Serialization;
 namespace forex_app_service.Models
 {
@@ -16,5 +17,6 @@ namespace forex_app_service.Models
 
         [JsonPropertyName("Ask")]
         public double Ask { get; set; }
+        public DateTime UTCTime{get => DateTime.Parse(Time);}
     }   
 }

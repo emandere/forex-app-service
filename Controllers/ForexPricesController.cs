@@ -44,6 +44,13 @@ namespace forex_app_service.Controllers
             return Ok("success");
         }
 
+        [HttpPost("/adddailyrealprices")]
+        public async Task<ActionResult> AddDailyRealPrices([FromBody] IEnumerable<ForexPriceDTO> prices)
+        {
+            await _forexPriceMap.AddPrices(prices);
+            return Ok("success");
+        }
+
         // PUT api/values/5
         [HttpPut("{instrument}")]
         public async Task<ActionResult> Put(string instrument, [FromBody] ForexPriceDTO price)

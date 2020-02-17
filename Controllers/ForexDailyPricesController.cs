@@ -33,6 +33,14 @@ namespace forex_app_service.Controllers
             return Ok(dailyPrice);
         }
 
+        // GET api/values/5
+        [HttpGet("{pair}")]
+        public async Task<ActionResult> GetLatest(string pair)
+        {
+            var dailyPrice = await _forexDailyPriceMap.GetLatestDailyPrice(pair);
+            return Ok(dailyPrice);
+        }
+
         // POST api/values
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] IEnumerable<ForexDailyPriceDTO> prices)

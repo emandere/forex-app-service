@@ -52,6 +52,18 @@ namespace forex_app_service.Mapper
             return _mapper.Map<ForexDailyPriceDTO>(firstDailyPrice);
         }
 
+        public async Task<ForexDailyPriceDTO> GetLatestDailyPrice(string pair)
+        {
+           
+            var dailyPriceMongo = await _context.DailyPrices
+                    .Find(x => x.Pair == pair)
+                    .SortByDescending(x => x.Datetime)
+                    .Limit(1)
+                    .SingleAsync();
+           
+            return _mapper.Map<ForexDailyPriceDTO>(dailyPriceMongo);
+        }
+
         public async Task AddDailyPrices(IEnumerable<ForexDailyPriceDTO> item)
         {
             foreach(var price in item)

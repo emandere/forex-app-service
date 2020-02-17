@@ -26,7 +26,7 @@ namespace forex_app_service.Mapper
 
         public async Task<List<ForexPriceIndicator>> GetLatestPrices(string indicator)
         {
-            var result = await _context.Prices.Find(_=>true).ToListAsync();
+            var result = await _context.LatestPrices.Find(_=>true).ToListAsync();
             var indicatorTasks = result.Select(x => GetIndicator(x.Instrument,indicator,x.Time));
 
             var indicators = await Task.WhenAll(indicatorTasks);
