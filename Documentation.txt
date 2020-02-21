@@ -13,3 +13,5 @@ mongorestore --gzip --archive=testdb.gz --db testdb
 curl -sfL https://get.k3s.io | sh -   
 sudo chmod -R 777 /etc/rancher/k3s/k3s.yaml
 /usr/local/bin/k3s-uninstall.sh
+
+kubectl exec -it shell-demo -- /bin/bash
