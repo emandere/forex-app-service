@@ -40,7 +40,7 @@ namespace forex_app_service.Mapper
                 var sessionMongo = _mapper.Map<ForexSessionMongo>(sessionModel);
                 sessionMongo.idinfo = sessionIn.Id;
                 sessionMongo.ExperimentId="NoExperiment";
-                var replace =await  _context.ForexSessions.ReplaceOneAsync(sess => sess.Id==sessionMongo.Id,sessionMongo);
+                var replace =await  _context.ForexSessions.ReplaceOneAsync(sess => sess.Id==sessionMongo.Id,sessionMongo,new ReplaceOptions{IsUpsert=true});
             }
         }
     }    
