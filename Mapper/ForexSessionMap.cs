@@ -21,7 +21,7 @@ namespace forex_app_service.Mapper
 
         public async Task<List<ForexSession>> GetLiveSessions()
         {
-            var result = await _context.ForexSessions.Find(x=>x.SessionType=="SessionType.live").ToListAsync();
+            var result = await _context.ForexSessions.Find(x=>x.SessionType=="SessionType.live" || x.SessionType=="live").ToListAsync();
             return result.Select((sessionMongo)=>_mapper.Map<ForexSession>(sessionMongo)).ToList();
         }
 
@@ -40,7 +40,18 @@ namespace forex_app_service.Mapper
                 var sessionMongo = _mapper.Map<ForexSessionMongo>(sessionModel);
                 sessionMongo.idinfo = sessionIn.Id;
                 sessionMongo.ExperimentId="NoExperiment";
-                var replace =await  _context.ForexSessions.ReplaceOneAsync(sess => sess.Id==sessionMongo.Id,sessionMongo,new ReplaceOptions{IsUpsert=true});
+                var findSession =  await _context.ForexSessions.CountDocumentsAsync(x=>x.Id==sessionMongo.Id);    
+                if(findSession == 0)
+                {
+                    Console.WriteLine($"Adding Session {sessionIn.Id}");
+                    await _context.ForexSessions.InsertOneAsync( _mapper.Map<ForexSessionMongo>(sessionMongo));
+                }
+                else
+                {
+                    Console.WriteLine($"Updating Session {sessionIn.Id}");
+                    var replace =await  _context.ForexSessions.ReplaceOneAsync(sess => sess.Id==sessionMongo.Id,sessionMongo);
+                }
+
             }
         }
     }    
