@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: forex-app-service
-        image: emandere/forex-import-x86
+        image: emandere/forex-app-x86
         env:
           - name: ASPNETCORE_ENVIRONMENT
             value: "Prodk3s"
