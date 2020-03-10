@@ -15,3 +15,5 @@ sudo chmod -R 777 /etc/rancher/k3s/k3s.yaml
 /usr/local/bin/k3s-uninstall.sh
 
 kubectl exec -it shell-demo -- /bin/bash
+
+sudo nc -l 80
