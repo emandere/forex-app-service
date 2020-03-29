@@ -40,9 +40,11 @@ namespace forex_app_service.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(string id)
         {
+            var sessions = await _forexSessionMap.GetLiveSession(id);
+            var sessionsDTO = sessions.Select((session)=>_mapper.Map<ForexSessionDTO>(session)).ToList();
             var sessionsVar = new 
             { 
-                sessions=await _forexSessionMap.GetLiveSession(id)
+                sessions = sessionsDTO
             };
             return Ok(sessionsVar);
         }
