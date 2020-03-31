@@ -34,8 +34,15 @@ namespace forex_app_service.Domain.Indicators
         }
         public static double BollingerLower(List<double> x)
         {
-            double val = x.Last();
-            return val - 2* StdDev(x);
+            double bollinger = 999.0;
+
+            if(x.Count() > 0)
+            {
+                double val = x.Last();
+                bollinger = val - 2* StdDev(x);
+            }
+
+            return bollinger;
         }
 
         public static double RSI(IEnumerable<List<double>> x)
