@@ -77,6 +77,13 @@ namespace forex_app_service.Controllers
         {
         }
 
+        // PUT api/values/5
+        [HttpPatch("executetrade/{sessionId}")]
+        public async Task ExecuteTrade(string sessionId, [FromBody] ForexTradeDTO trade)
+        {
+            await _forexSessionMap.ExecuteTrade(sessionId,trade);
+        }
+
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)

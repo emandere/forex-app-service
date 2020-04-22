@@ -8,6 +8,18 @@ namespace forex_app_service.Domain
 {
     public  class ForexSession
     {
+        public bool ExecuteTrade(string pair,double price,int units,double stopLoss,double takeProfit)
+        {
+            Trade trade = new Trade();
+            trade.Id = this.SessionUser.Accounts.Primary.Trades.Length;
+            trade.Pair=pair;
+            trade.Units=units;
+            trade.OpenPrice = price;
+            trade.StopLoss = stopLoss;
+            trade.TakeProfit = takeProfit;
+            this.SessionUser.Accounts.Primary.Trades.Append(trade);
+            return true;
+        }
         public Account GetAccountByPair(string pair)
         {
             Account acc = new Account();

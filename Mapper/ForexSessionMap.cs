@@ -31,6 +31,12 @@ namespace forex_app_service.Mapper
             return result.Select((sessionMongo)=>_mapper.Map<ForexSession>(sessionMongo)).ToList();
         }
 
+        public async Task ExecuteTrade(string sessionId, ForexTradeDTO trade)
+        {
+            var sessionList = await GetLiveSession(sessionId);
+            sessionList[0].ExecuteTrade(trade.Pair,0,0,0,0.0);
+        }
+
         public async Task SaveSessions(IEnumerable<ForexSessionInDTO> sessions)
         {
             foreach(var session in sessions)
