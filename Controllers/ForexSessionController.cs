@@ -84,6 +84,12 @@ namespace forex_app_service.Controllers
             await _forexSessionMap.ExecuteTrade(sessionId,trade);
         }
 
+        [HttpPatch("updatesession/{sessionId}")]
+        public async Task UpdateSession(string sessionId, [FromBody] ForexPriceDTO trade)
+        {
+            await _forexSessionMap.UpdateSession(sessionId,trade);
+        }
+
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)

@@ -11,15 +11,26 @@ namespace forex_app_service.Domain
         public bool ExecuteTrade(string pair,double price,int units,double stopLoss,double takeProfit)
         {
             Trade trade = new Trade();
-            trade.Id = this.SessionUser.Accounts.Primary.Trades.Length;
+            trade.Id = this.SessionUser.Accounts.Primary.Trades.Count;
             trade.Pair=pair;
             trade.Units=units;
             trade.OpenPrice = price;
             trade.StopLoss = stopLoss;
             trade.TakeProfit = takeProfit;
-            this.SessionUser.Accounts.Primary.Trades.Append(trade);
+            this.SessionUser.Accounts.Primary.Trades.Add(trade);
             return true;
         }
+
+        public bool UpdateSession(string pair,double price)
+        {
+            var trades = this.SessionUser.Accounts.Primary.Trades.Where(x => x.Pair==pair);
+            foreach(var trade in trades)
+            {
+                trade.ClosePrice = price;
+            }
+            return true;
+        }
+
         public Account GetAccountByPair(string pair)
         {
             Account acc = new Account();
@@ -179,7 +190,7 @@ namespace forex_app_service.Domain
         }
 
       
-        public Trade[] Trades { get; set; }
+        public List<Trade> Trades { get; set; }
 
       
         public Order[] Orders { get; set; }

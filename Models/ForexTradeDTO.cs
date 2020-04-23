@@ -9,5 +9,13 @@ namespace forex_app_service.Models
 
         [JsonPropertyName("date")]
         public string Date { get; set; }
+        [JsonPropertyName("stoploss")]
+        public double StopLoss { get; set; }
+        [JsonPropertyName("takeprofit")]
+        public double TakeProfit { get; set; }
+        [JsonPropertyName("price")]
+        public double Price { get; set; }
+        [JsonPropertyName("units")]
+        public int Units { get; set; }
     }
 }
