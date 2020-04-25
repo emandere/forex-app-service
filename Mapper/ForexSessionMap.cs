@@ -34,14 +34,14 @@ namespace forex_app_service.Mapper
         public async Task ExecuteTrade(string sessionId, ForexTradeDTO trade)
         {
             var sessionList = await GetLiveSession(sessionId);
-            sessionList[0].ExecuteTrade(trade.Pair,trade.Price,trade.Units,trade.StopLoss,trade.TakeProfit);
+            sessionList[0].ExecuteTrade(trade.Pair,trade.Price,trade.Units,trade.StopLoss,trade.TakeProfit,trade.Long);
             await UpdateSessionHelper(sessionList[0]);
         }
 
         public async Task UpdateSession(string sessionId, ForexPriceDTO price)
         {
             var sessionList = await GetLiveSession(sessionId);
-            sessionList[0].UpdateSession(price.Instrument,price.Bid);
+            sessionList[0].UpdateSession(price.Instrument,price.Bid,price.Ask,price.Time);
             await UpdateSessionHelper(sessionList[0]);
             //sessionList[0].ExecuteTrade(trade.Pair,trade.Price,trade.Units,trade.StopLoss,trade.TakeProfit);
         }

@@ -17,5 +17,7 @@ namespace forex_app_service.Models
         public double Price { get; set; }
         [JsonPropertyName("units")]
         public int Units { get; set; }
+        [JsonPropertyName("long")]
+        public bool Long { get; set; }
     }
 }

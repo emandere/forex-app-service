@@ -8,7 +8,7 @@ namespace forex_app_service.Domain
 {
     public  class ForexSession
     {
-        public bool ExecuteTrade(string pair,double price,int units,double stopLoss,double takeProfit)
+        public bool ExecuteTrade(string pair,double price,int units,double stopLoss,double takeProfit,bool position)
         {
             Trade trade = new Trade();
             trade.Id = this.SessionUser.Accounts.Primary.Trades.Count;
@@ -17,16 +17,41 @@ namespace forex_app_service.Domain
             trade.OpenPrice = price;
             trade.StopLoss = stopLoss;
             trade.TakeProfit = takeProfit;
+            trade.Long = position;
             this.SessionUser.Accounts.Primary.Trades.Add(trade);
             return true;
         }
 
-        public bool UpdateSession(string pair,double price)
+        public bool UpdateSession(string pair,double bid,double ask,string closeDate)
         {
             var trades = this.SessionUser.Accounts.Primary.Trades.Where(x => x.Pair==pair);
             foreach(var trade in trades)
             {
-                trade.ClosePrice = price;
+                trade.CloseDate = closeDate;
+                if(trade.Long)
+                {
+                    trade.ClosePrice = ask;
+                    if( (trade.ClosePrice > trade.TakeProfit) ||
+                        (trade.ClosePrice < trade.StopLoss))
+                    {
+                        this.SessionUser.Accounts.Primary.ClosedTrades.Add(trade);
+                        this.SessionUser.Accounts.Primary.Trades.Remove(trade);
+                    }
+                }
+                else
+                {
+                    trade.ClosePrice = bid;
+                    if( (trade.ClosePrice < trade.TakeProfit) ||
+                        (trade.ClosePrice > trade.StopLoss))
+                    {
+                        this.SessionUser.Accounts.Primary.ClosedTrades.Add(trade);
+                        var a = this.SessionUser.Accounts.Primary.ClosedTrades.Where(x => x.Pair == "VVVUSD").ToList();
+                        this.SessionUser.Accounts.Primary.Trades.Remove(trade);
+                    }
+                }
+
+               
+               
             }
             return true;
         }
@@ -46,7 +71,8 @@ namespace forex_app_service.Domain
                                             .Primary
                                             .ClosedTrades
                                             .Where(x=>x.Pair==pair)
-                                            .ToArray();
+                                            .ToList();
+                                            
 
             foreach(var history in SessionUser.Accounts.Primary.BalanceHistory)
             {                               
@@ -196,7 +222,7 @@ namespace forex_app_service.Domain
         public Order[] Orders { get; set; }
 
       
-        public Trade[] ClosedTrades { get; set; }
+        public List<Trade> ClosedTrades { get; set; }
 
      
         public BalanceHistory[] BalanceHistory { get; set; }
