@@ -92,8 +92,9 @@ namespace forex_app_service.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(string id)
         {
+            await _forexSessionMap.DeleteSession(id);
         }
     }
 }

@@ -52,6 +52,11 @@ namespace forex_app_service.Mapper
             var replace =await  _context.ForexSessions.ReplaceOneAsync(sess => sess.Id==sessionMongo.Id,sessionMongo);
         }
 
+        public  async Task DeleteSession(string id)
+        {
+            await _context.ForexSessions.DeleteOneAsync(sess => sess.Id == id);
+        }
+
         public async Task SaveSessions(IEnumerable<ForexSessionInDTO> sessions)
         {
             foreach(var session in sessions)
