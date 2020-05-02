@@ -82,7 +82,7 @@ namespace forex_app_service.Models
         public double Cash { get; set; }
 
         [JsonPropertyName("realizedPL")]
-        public double RealizedPl { get; set; }
+        public double RealizedPL { get; set; }
 
         [JsonPropertyName("Margin")]
         public double Margin { get; set; }

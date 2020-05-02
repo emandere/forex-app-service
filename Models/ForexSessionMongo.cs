@@ -99,7 +99,7 @@ namespace forex_app_service.Models
         public long MarginRatio { get; set; }
 
         [BsonElement("realizedPL")]
-        public double RealizedPl { get; set; }
+        public double RealizedPL { get; set; }
 
         [BsonElement("Trades")]
         public TradeMongo[] Trades { get; set; }

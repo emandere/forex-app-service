@@ -8,23 +8,25 @@ namespace forex_app_service.Domain
 {
     public  class ForexSession
     {
-        public bool ExecuteTrade(string pair,double price,int units,double stopLoss,double takeProfit,bool position)
+        public bool ExecuteTrade(string pair,double price,int units,double stopLoss,double takeProfit,bool position,string date)
         {
             Trade trade = new Trade();
             trade.Id = this.SessionUser.Accounts.Primary.Trades.Count;
             trade.Pair=pair;
             trade.Units=units;
             trade.OpenPrice = price;
+            trade.ClosePrice = price;
             trade.StopLoss = stopLoss;
             trade.TakeProfit = takeProfit;
             trade.Long = position;
+            trade.OpenDate = date;
             this.SessionUser.Accounts.Primary.Trades.Add(trade);
             return true;
         }
 
         public bool UpdateSession(string pair,double bid,double ask,string closeDate)
         {
-            var trades = this.SessionUser.Accounts.Primary.Trades.Where(x => x.Pair==pair);
+            List<Trade> trades = this.SessionUser.Accounts.Primary.Trades.Where(x => x.Pair==pair).ToList();
             foreach(var trade in trades)
             {
                 trade.CloseDate = closeDate;
@@ -34,8 +36,7 @@ namespace forex_app_service.Domain
                     if( (trade.ClosePrice > trade.TakeProfit) ||
                         (trade.ClosePrice < trade.StopLoss))
                     {
-                        this.SessionUser.Accounts.Primary.ClosedTrades.Add(trade);
-                        this.SessionUser.Accounts.Primary.Trades.Remove(trade);
+                        closeTrade(trade);
                     }
                 }
                 else
@@ -44,19 +45,34 @@ namespace forex_app_service.Domain
                     if( (trade.ClosePrice < trade.TakeProfit) ||
                         (trade.ClosePrice > trade.StopLoss))
                     {
-                        this.SessionUser.Accounts.Primary.ClosedTrades.Add(trade);
-                        var a = this.SessionUser.Accounts.Primary.ClosedTrades.Where(x => x.Pair == "VVVUSD").ToList();
-                        this.SessionUser.Accounts.Primary.Trades.Remove(trade);
+                        closeTrade(trade);
                     }
                 }
-
-               
                
             }
+
+            string tradeDay = DateTime.Parse(closeDate).ToString("yyyy-MM-dd");
+
+            var history = new BalanceHistory
+            {
+                Date = tradeDay,
+                Amount = this.SessionUser.Accounts.Primary.NetAssetValue
+            };
+            this.SessionUser.Accounts.Primary.UpdateHistory(history);
+
             return true;
         }
 
-        public Account GetAccountByPair(string pair)
+        private void closeTrade(Trade trade)
+        {
+            
+            this.SessionUser.Accounts.Primary.Cash +=trade.PL;
+            this.SessionUser.Accounts.Primary.ClosedTrades.Add(trade);
+            this.SessionUser.Accounts.Primary.Trades.Remove(trade);
+
+        }
+
+        /*public Account GetAccountByPair(string pair)
         {
             Account acc = new Account();
             SortedSet<string> setSessionDates = new SortedSet<string>();
@@ -96,10 +112,10 @@ namespace forex_app_service.Domain
                 hist.Add(new BalanceHistory(){Date=sessdate,Amount=pairAmount});
             }
             
-            acc.BalanceHistory = hist.ToArray();
+            acc.BalanceHistory = hist;
 
             return acc;
-        }
+        }*/
         public string Id { get; set; }
         public string idinfo { get; set; }
 
@@ -145,7 +161,7 @@ namespace forex_app_service.Domain
 
         public double Balance 
         {
-            get => Accounts.Primary.BalanceHistory.Last().Amount;
+            get => Accounts.Primary.NetAssetValue;
                 
         }
 
@@ -197,12 +213,22 @@ namespace forex_app_service.Domain
 
     public  class Account
     {
+        private double _realizedPL;
+
+        private List<BalanceHistory> _history;
+
+        private double _cash;
+
        
         public string Id { get; set; }
 
         public string idinfo { get; set; }
 
-        public double Cash { get; set; }
+        public double Cash 
+        { 
+            get=>_cash;
+            set=> _cash=value;
+        }
 
         public long Margin { get; set; }
 
@@ -212,7 +238,18 @@ namespace forex_app_service.Domain
       
         public double RealizedPL 
         { 
-            get => BalanceHistory.Last().Amount - BalanceHistory.First().Amount;
+            get => BalanceHistory.Count > 0 ? BalanceHistory.Last().Amount - BalanceHistory.First().Amount : 0;
+        }
+
+        public double NetAssetValue
+        {
+            get => Cash + UnRealizedPL;
+        }
+
+
+        public double UnRealizedPL
+        {
+            get => Trades.Sum(x => x.PL);
         }
 
       
@@ -225,7 +262,16 @@ namespace forex_app_service.Domain
         public List<Trade> ClosedTrades { get; set; }
 
      
-        public BalanceHistory[] BalanceHistory { get; set; }
+        public List<BalanceHistory> BalanceHistory { get; set; }
+
+        public void UpdateHistory(BalanceHistory history)
+        {
+            var currHistory = BalanceHistory.FirstOrDefault(x => x.Date == history.Date);
+            if(currHistory!=null)
+                BalanceHistory.Remove(currHistory);
+
+            BalanceHistory.Add(history);
+        }
 
      
         public long Idcount { get; set; }

@@ -50,7 +50,7 @@ namespace forex_app_service.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}/{pair}")]
+        /*[HttpGet("{id}/{pair}")]
 
         public async Task<ActionResult> Get(string id,string pair)
         {
@@ -61,7 +61,7 @@ namespace forex_app_service.Controllers
                 accounts = accountsbypair
             };
             return Ok(accountsbypair);
-        }
+        }*/
 
         // POST api/values
         [HttpPost]
