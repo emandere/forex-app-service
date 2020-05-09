@@ -25,11 +25,10 @@ namespace forex_app_service.Controllers
             return Ok("wait");
         }
 
-        // GET api/values/5
-        [HttpGet("{rule}/{pair}/{startdate}/{enddate}")]
-        public async Task<ActionResult> Get(string rule,string pair,string startdate,string enddate)
+        [HttpGet("{rule}/{pair}/{enddate}/{window}")]
+        public async Task<ActionResult> Get(string rule,string pair,string enddate,int window)
         {
-            var ruleResult = await _forexRuleMap.GetRule(rule,pair,startdate,enddate);
+            var ruleResult = await _forexRuleMap.GetRule(rule,pair,window,enddate);
             return Ok(ruleResult);
         }
     }

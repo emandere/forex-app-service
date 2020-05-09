@@ -9,5 +9,7 @@ namespace forex_app_service.Models
         public bool IsMet { get; set; } 
         [JsonPropertyName("window")]  
         public int window { get; set; }
+        [JsonPropertyName("indicator")]  
+        public double indicator { get; set; }
     }   
 }
