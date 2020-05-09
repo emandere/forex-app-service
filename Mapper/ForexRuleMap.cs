@@ -34,7 +34,7 @@ namespace forex_app_service.Mapper
 
             string startDate = min.ToString("yyyy-MM-dd");
             var prices = await _dailyPriceMap.GetPriceRangeInternal(pair,startDate,endDate);
-            var ind = await _indicatorMap.GetIndicator(pair,rule,endDate,window);
+            var ind = await _indicatorMap.GetIndicator(pair,new RSIOverbought70().Indicator(),endDate,window);
             var ruleResult = new ForexRuleDTO()
             {
                 IsMet = new RSIOverbought70().IsMet(prices),

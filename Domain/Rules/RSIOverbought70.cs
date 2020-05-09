@@ -5,6 +5,7 @@ namespace forex_app_service.Domain.Rules
 {
     public class RSIOverbought70:IRule
     {
+        public string Indicator() => "RSI";
         public bool IsMet(IEnumerable<ForexDailyPrice> window)
         {
             if(Stats.RSI(window.Select(z=> new List<double>{z.Open,z.Close})) > 70 )
