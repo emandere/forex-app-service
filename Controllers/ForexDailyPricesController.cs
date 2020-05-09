@@ -41,6 +41,14 @@ namespace forex_app_service.Controllers
             return Ok(dailyPrice);
         }
 
+        // GET api/values/5
+        [HttpGet("{pair}/{startdate}/{enddate}")]
+        public async Task<ActionResult> GetRange(string pair,string startdate,string enddate)
+        {
+            var dailyPrice = await _forexDailyPriceMap.GetPriceRange(pair,startdate,enddate);
+            return Ok(dailyPrice);
+        }
+
         // POST api/values
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] IEnumerable<ForexDailyPriceDTO> prices)

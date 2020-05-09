@@ -80,6 +80,7 @@ namespace forex_app_service
             services.AddTransient<ForexPriceIndicatorMap,ForexPriceIndicatorMap>();
             services.AddTransient<ForexIndicatorMap,ForexIndicatorMap>();
             services.AddTransient<ForexSessionMap,ForexSessionMap>();
+            services.AddTransient<ForexRuleMap,ForexRuleMap>();
             //services.AddSingleton(mapper);
             services.AddAutoMapper(c=>c.AddProfiles(profiles),typeof(Startup));
         }

@@ -4,6 +4,6 @@ namespace forex_app_service.Domain.Rules
 {
     public interface IRule
     {
-        bool IsMet(IEnumerable<ForexDailyPrice> window,double currprice);
+        bool IsMet(IEnumerable<ForexDailyPrice> window);
     }
 }
