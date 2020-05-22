@@ -18,7 +18,7 @@ namespace forex_app_service.Mapper
             _mapper = mapper;
             _context = new DbContext(settings);;
         }
-
+        //Mental Models
         public async Task<List<ForexPrice>> GetLatestPrices()
         {
             var result = await _context.LatestPrices.Find(_=>true).ToListAsync();
