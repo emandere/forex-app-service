@@ -16,7 +16,7 @@ namespace forex_app_service.Config
             CreateMap<ForexPriceDTO, ForexRealPriceMongo>()
                 .ForMember(x => x.Id, opt => opt.Ignore());
             CreateMap<ForexPriceMongo, ForexPrice>();
-
+            CreateMap<ForexPriceMongo, ForexPriceDTO>();
             CreateMap<DateTime, string>().ConvertUsing(s => s.ToString("MM/dd/yyyy HH:mm:ss"));
         }
 

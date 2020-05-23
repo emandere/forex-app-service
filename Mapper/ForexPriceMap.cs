@@ -19,10 +19,10 @@ namespace forex_app_service.Mapper
             _context = new DbContext(settings);;
         }
         //Mental Models
-        public async Task<List<ForexPrice>> GetLatestPrices()
+        public async Task<List<ForexPriceDTO>> GetLatestPrices()
         {
             var result = await _context.LatestPrices.Find(_=>true).ToListAsync();
-            return result.Select((priceMongo)=>_mapper.Map<ForexPrice>(priceMongo)).ToList();
+            return result.Select((priceMongo)=>_mapper.Map<ForexPriceDTO>(priceMongo)).ToList();
         }
 
         public async Task AddPrice(ForexPriceDTO item)
