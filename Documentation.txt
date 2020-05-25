@@ -21,3 +21,7 @@ sudo nc -l 80
 wsl -l -v
 
 wsl --unregister docker-desktop
+
+db.rawprices.createIndex({"instrument":1,"time":1})
+db.rawprices.createIndex({"time":1})
+
