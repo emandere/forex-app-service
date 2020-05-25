@@ -55,6 +55,14 @@ namespace forex_app_service.Mapper
             return _mapper.Map<List<ForexPriceDTO>>(pricesMongo);
         }
 
+         public async Task<List<ForexPriceDTO>> GetPrices(string pair,string date)
+        {
+            var startDate = DateTime.ParseExact(date,"yyyyMMdd",CultureInfo.InvariantCulture);
+            var endDate = startDate.AddDays(1);
+            var pricesMongo = await _context.Prices.Find(x => x.Instrument == pair && x.Time>=startDate && x.Time<endDate).ToListAsync();
+            return _mapper.Map<List<ForexPriceDTO>>(pricesMongo);
+        }
+
         public async Task SaveRealTimePrice(string instrument,ForexPriceDTO item)
         {
             var priceLatest = _mapper.Map<ForexPriceMongo>(item);
