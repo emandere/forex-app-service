@@ -17,3 +17,5 @@ sudo chmod -R 777 /etc/rancher/k3s/k3s.yaml
 kubectl exec -it shell-demo -- /bin/bash
 
 sudo nc -l 80
+
+wsl -l -v
