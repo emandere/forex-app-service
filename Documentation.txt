@@ -19,3 +19,5 @@ kubectl exec -it shell-demo -- /bin/bash
 sudo nc -l 80
 
 wsl -l -v
+
+wsl --unregister docker-desktop
