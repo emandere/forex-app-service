@@ -7,7 +7,9 @@ namespace forex_app_service.Models
 {
     public  class ForexRealPriceMongo
     {
-        public ObjectId Id { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.String)]
+        public string Id { get; set; }
 
         [BsonElement("instrument")]
         public string Instrument { get; set; }

@@ -25,6 +25,17 @@ namespace forex_app_service.Controllers
             return Ok("success");
         }
 
+        [HttpGet("{date}")]
+        public async Task<ActionResult> Get(string date)
+        {
+            var dailyRealPrices = await _forexPriceMap.GetPrices(date);
+            var dailyPrice = new 
+            {
+                prices = dailyRealPrices
+            };
+            return Ok(dailyPrice);
+        }
+
        
     }
 }

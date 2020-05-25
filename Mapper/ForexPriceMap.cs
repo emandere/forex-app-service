@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Globalization;
 using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.Extensions.Options;
@@ -32,7 +33,7 @@ namespace forex_app_service.Mapper
             
         }
 
-         public async Task AddPrices(IEnumerable<ForexPriceDTO> items)
+        public async Task AddPrices(IEnumerable<ForexPriceDTO> items)
         {
             foreach(var price in items)
             {
@@ -44,6 +45,14 @@ namespace forex_app_service.Mapper
              
             }
             
+        }
+
+        public async Task<List<ForexPriceDTO>> GetPrices(string date)
+        {
+            var startDate = DateTime.ParseExact(date,"yyyyMMdd",CultureInfo.InvariantCulture);
+            var endDate = startDate.AddDays(1);
+            var pricesMongo = await _context.Prices.Find(x => x.Time>=startDate && x.Time<endDate).ToListAsync();
+            return _mapper.Map<List<ForexPriceDTO>>(pricesMongo);
         }
 
         public async Task SaveRealTimePrice(string instrument,ForexPriceDTO item)
