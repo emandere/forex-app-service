@@ -52,7 +52,7 @@ namespace forex_app_service.Domain
             }
 
             string tradeDay = DateTime.Parse(closeDate).ToString("yyyy-MM-dd");
-
+            this.CurrentTime = tradeDay;
             var history = new BalanceHistory
             {
                 Date = tradeDay,
