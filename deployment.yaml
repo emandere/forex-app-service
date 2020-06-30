@@ -24,3 +24,7 @@ spec:
           - name: secrets
             mountPath: "/app/secrets"
             readOnly: true
+      volumes:
+        - name: secrets
+          secret:
+            secretName: fxaccount
