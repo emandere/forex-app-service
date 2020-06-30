@@ -41,8 +41,14 @@ namespace forex_app_service
                 options.Database 
                     = Configuration.GetSection("MongoConnection:Database").Value;
                 options.ForexAppServiceBase
-                    = Configuration.GetSection("ForexAppService:Base").Value;    
+                    = Configuration.GetSection("ForexAppService:Base").Value;  
+                options.ForexAccountName 
+                    = Configuration.GetSection("Account:AccountName").Value;  
+                options.FOrexAccountToken 
+                    = Configuration.GetSection("Account:Token").Value;
             });
+
+            Console.WriteLine(Configuration.GetSection("Account:Token").Value);
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             //services.AddMvc(option => option.EnableEndpointRouting = true);
            

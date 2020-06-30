@@ -24,7 +24,8 @@ namespace forex_app_service
                     IWebHostEnvironment env = builderContext.HostingEnvironment;
 
                     config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                          .AddJsonFile("secrets/appsettings.secrets.json")
+                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
                 })
                 .UseStartup<Startup>();
     }

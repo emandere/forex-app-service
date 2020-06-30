@@ -16,7 +16,11 @@ spec:
       - name: forex-app-service
         image: emandere/forex-app-service-x86:{buildId}
         env:
-          - name: ASPNETCORE_ENVIRONMENT
-            value: "Prodk3s"
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Prodk3s"
         ports:
         - containerPort: 80
+        volumeMounts:
+        - name: secrets
+          mountPath: "/app/secrets"
+          readOnly: true
