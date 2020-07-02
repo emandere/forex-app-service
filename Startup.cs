@@ -42,9 +42,9 @@ namespace forex_app_service
                     = Configuration.GetSection("MongoConnection:Database").Value;
                 options.ForexAppServiceBase
                     = Configuration.GetSection("ForexAppService:Base").Value;  
-                options.ForexAccountName 
-                    = Configuration.GetSection("Account:AccountName").Value;  
-                options.FOrexAccountToken 
+                options.ForexAccount 
+                    = Configuration.GetSection("Account:Account").Value;  
+                options.Token 
                     = Configuration.GetSection("Account:Token").Value;
             });
 
@@ -87,6 +87,7 @@ namespace forex_app_service
             services.AddTransient<ForexIndicatorMap,ForexIndicatorMap>();
             services.AddTransient<ForexSessionMap,ForexSessionMap>();
             services.AddTransient<ForexRuleMap,ForexRuleMap>();
+            services.AddTransient<ForexTradeMap,ForexTradeMap>();
             //services.AddSingleton(mapper);
             services.AddAutoMapper(c=>c.AddProfiles(profiles),typeof(Startup));
         }
