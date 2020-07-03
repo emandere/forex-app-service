@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using forex_app_service.Mapper;
+using forex_app_service.Models;
 namespace forex_app_service.Controllers
 {
     [Route("api/[controller]")]
@@ -19,6 +20,14 @@ namespace forex_app_service.Controllers
         {
             var openTrades = await _forexTradeMap.GetOpenTrades();
             return Ok(openTrades);
+
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody] ForexTradeDTO trade)
+        {
+            await _forexTradeMap.ExecuteTrade(trade);
+            return Ok();
         }
     }
 }
