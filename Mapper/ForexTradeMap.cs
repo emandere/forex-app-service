@@ -45,7 +45,7 @@ namespace forex_app_service.Mapper
                     }
                 }
             };
-            string url = $"https://api-fxtrade.oanda.com/v3/accounts/{_settings.Value.ForexAccount}/orders";
+            string url = $"{_settings.Value.URL}/v3/accounts/{_settings.Value.ForexAccount}/orders";
             return await PostAsync<ForexRealTradeDto>(tradeOut,url);
         }
 

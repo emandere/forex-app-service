@@ -46,6 +46,8 @@ namespace forex_app_service
                     = Configuration.GetSection("Account:Account").Value;  
                 options.Token 
                     = Configuration.GetSection("Account:Token").Value;
+                options.URL 
+                    = Configuration.GetSection("URL").Value;
             });
 
             

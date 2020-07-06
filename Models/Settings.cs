@@ -7,5 +7,6 @@ namespace forex_app_service.Models
         public string ForexAppServiceBase;
         public string ForexAccount;
         public string Token;
+        public string URL;
     }
 }
