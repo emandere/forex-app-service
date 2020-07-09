@@ -19,12 +19,13 @@ namespace forex_app_service.Mapper
 
         public async Task<ForexOpenTradesDTO> GetOpenTrades()
         {
-            string url = $"https://api-fxtrade.oanda.com/v3/accounts/{_settings.Value.ForexAccount}/openTrades";
+            string url = $"{_settings.Value.URL}/v3/accounts/{_settings.Value.ForexAccount}/openTrades";
             return await GetAsync<ForexOpenTradesDTO>(url);
         }
 
         public async Task<HttpResponseMessage> ExecuteTrade(ForexTradeDTO tradeIn)
         {
+            string precision = tradeIn.Pair == "USD_JPY" ? "N2" : "N4";
             int position = tradeIn.Long ? 1 : -1;
             var tradeOut = new ForexRealTradeDto
             {
@@ -37,11 +38,11 @@ namespace forex_app_service.Mapper
                     PositionFill = "DEFAULT",
                     StopLossOnFill = new OnFill
                     {
-                        Price = tradeIn.StopLoss.ToString()
+                        Price = tradeIn.StopLoss.ToString(precision)
                     },
                     TakeProfitOnFill = new OnFill
                     {
-                        Price = tradeIn.TakeProfit.ToString()
+                        Price = tradeIn.TakeProfit.ToString(precision)
                     }
                 }
             };
