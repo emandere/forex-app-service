@@ -1,8 +1,11 @@
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using AutoMapper;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -12,11 +15,14 @@ namespace forex_app_service.Mapper
 {
     public class ForexPriceMap
     {
+        static readonly HttpClient client = new HttpClient();
+        private readonly IOptions<Settings> _settings;
         private readonly IMapper _mapper;
         private readonly DbContext _context = null;
          public ForexPriceMap(IMapper mapper,IOptions<Settings> settings)
         {
             _mapper = mapper;
+            _settings = settings;
             _context = new DbContext(settings);;
         }
         //Mental Models
@@ -47,6 +53,12 @@ namespace forex_app_service.Mapper
             
         }
 
+        public async Task<ForexQuotesDto> GetQuotes(string pair)
+        {
+            string url = $"{_settings.Value.URL}/v3/instruments/{pair}/candles?count=6&price=BA&granularity=S5";
+            return await GetAsync<ForexQuotesDto>(url);
+        }
+
         public async Task<List<ForexPriceDTO>> GetPrices(string date)
         {
             var startDate = DateTime.ParseExact(date,"yyyyMMdd",CultureInfo.InvariantCulture);
@@ -71,6 +83,14 @@ namespace forex_app_service.Mapper
             await _context.LatestPrices.DeleteOneAsync(x=>x.Instrument==instrument);
             await _context.LatestPrices.InsertOneAsync(priceLatest);
             
+        }
+
+        private async Task<T> GetAsync<T>(string url)
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _settings.Value.Token);
+            var responseBody = await client.GetStringAsync(url);
+            var data = JsonSerializer.Deserialize<T>(responseBody);
+            return data;
         }
     }    
 }

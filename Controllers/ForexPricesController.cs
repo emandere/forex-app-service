@@ -30,6 +30,14 @@ namespace forex_app_service.Controllers
         }
 
         // GET api/values/5
+        [HttpGet("quote/{pair}")]
+        public async Task<ActionResult> GetPair(string pair)
+        {
+            var result = await _forexPriceMap.GetQuotes(pair);
+            return Ok(result);
+        }
+
+        // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
