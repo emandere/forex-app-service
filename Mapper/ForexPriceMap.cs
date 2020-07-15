@@ -53,10 +53,11 @@ namespace forex_app_service.Mapper
             
         }
 
-        public async Task<ForexQuotesDto> GetQuotes(string pair)
+        public async Task<ForexPriceDTO> GetQuotes(string pair)
         {
             string url = $"{_settings.Value.URL}/v3/instruments/{pair}/candles?count=6&price=BA&granularity=S5";
-            return await GetAsync<ForexQuotesDto>(url);
+            var quote = await GetAsync<ForexQuotesDTO>(url);
+            return _mapper.Map<ForexPriceDTO>(quote);
         }
 
         public async Task<List<ForexPriceDTO>> GetPrices(string date)

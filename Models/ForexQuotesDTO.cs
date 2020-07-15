@@ -2,7 +2,7 @@ using System;
 using System.Text.Json.Serialization;
 namespace forex_app_service.Models
 {
-    public partial class ForexQuotesDto
+    public partial class ForexQuotesDTO
     {
         [JsonPropertyName("instrument")]
         public string Instrument { get; set; }
@@ -23,7 +23,7 @@ namespace forex_app_service.Models
         public long Volume { get; set; }
 
         [JsonPropertyName("time")]
-        public DateTimeOffset Time { get; set; }
+        public string Time { get; set; }
 
         [JsonPropertyName("bid")]
         public Ask Bid { get; set; }
