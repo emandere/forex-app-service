@@ -29,7 +29,6 @@ namespace forex_app_service.Config
                 .ForMember(x => x.Id, opt => opt.Ignore());
             CreateMap<ForexPriceMongo, ForexPrice>();
             CreateMap<ForexPriceMongo, ForexPriceDTO>();
-            CreateMap<ForexRealPriceMongo, ForexPriceDTO>();
             CreateMap<ForexQuotesDTO,ForexPriceDTO>()
                 .ForMember(dest => dest.Instrument, opt => opt.MapFrom( src => pairToInstrument[src.Instrument]))
                 .ForMember(dest => dest.Time, opt => opt.MapFrom( src => src.Candles.Last().Time.Split('.',StringSplitOptions.None)[0] + "Z"))

@@ -52,7 +52,7 @@ namespace forex_app_service.Controllers
             return Ok("success");
         }
 
-        [HttpPost("/adddailyrealprices")]
+        [HttpPost("adddailyrealprices")]
         public async Task<ActionResult> AddDailyRealPrices([FromBody] IEnumerable<ForexPriceDTO> prices)
         {
             await _forexPriceMap.AddPrices(prices);
