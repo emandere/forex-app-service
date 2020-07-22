@@ -68,7 +68,7 @@ namespace forex_app_service.Mapper
             DateTime min =  DateTime.ParseExact(startdate,"yyyy-MM-dd",CultureInfo.InvariantCulture);
             DateTime max = DateTime.ParseExact(enddate,"yyyy-MM-dd",CultureInfo.InvariantCulture);
             var dailyPriceMongo = await _context.DailyPrices
-                    .Find(x => x.Pair == pair && x.Datetime>=min && x.Datetime < max)
+                    .Find(x => x.Pair == pair && x.Datetime>=min && x.Datetime <= max)
                     .ToListAsync();
             //var firstDailyPrice = dailyPriceMongo.Find(x => x.Datetime>=min && x.Datetime < max);
             return _mapper.Map<List<ForexDailyPrice>>(dailyPriceMongo);
