@@ -2,6 +2,11 @@ using System.Text.Json.Serialization;
 
 namespace forex_app_service.Models
 {
+    public class ForexSessionsDTO
+    {
+        [JsonPropertyName("sessions")]
+        public ForexSessionDTO[] sessions { get; set; }
+    }
     public  class ForexSessionDTO
     {
         [JsonPropertyName("Id")]

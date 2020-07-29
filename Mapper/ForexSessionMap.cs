@@ -41,7 +41,7 @@ namespace forex_app_service.Mapper
         public async Task UpdateSession(string sessionId, ForexPriceDTO price)
         {
             var sessionList = await GetLiveSession(sessionId);
-            sessionList[0].UpdateSession(price.Instrument,price.Bid,price.Ask,price.Time);
+            sessionList[0].UpdateSession(price.Instrument,price.Bid,price.Ask,price.Time.ToString());
             await UpdateSessionHelper(sessionList[0]);
             //sessionList[0].ExecuteTrade(trade.Pair,trade.Price,trade.Units,trade.StopLoss,trade.TakeProfit);
         }
@@ -57,11 +57,11 @@ namespace forex_app_service.Mapper
             await _context.ForexSessions.DeleteOneAsync(sess => sess.Id == id);
         }
 
-        public async Task SaveSessions(IEnumerable<ForexSessionInDTO> sessions)
+        public async Task SaveSessions(ForexSessionsDTO session)
         {
-            foreach(var session in sessions)
+            foreach(var sessionIn in session.sessions)
             {
-                var sessionIn = _mapper.Map<ForexSessionDTO>(session);  
+                //var sessionIn = _mapper.Map<ForexSessionDTO>(session);  
                 var sessionModel = _mapper.Map<ForexSession>(sessionIn);    
                 var sessionMongo = _mapper.Map<ForexSessionMongo>(sessionModel);
                 sessionMongo.idinfo = sessionIn.Id;

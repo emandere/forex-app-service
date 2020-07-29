@@ -17,6 +17,6 @@ namespace forex_app_service.Models
 
         [JsonPropertyName("ask")]
         public double Ask { get; set; }
-        public DateTime UTCTime{get => DateTime.Parse(Time);}
+        public DateTime UTCTime{get => DateTime.Parse(Time+"Z");}
     }   
 }
