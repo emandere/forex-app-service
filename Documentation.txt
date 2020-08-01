@@ -9,6 +9,7 @@ mongodump --archive=testdb.gz --gzip --db test
 sudo docker cp mongo:/testdb.gz .
 ssh ... testdb.gz
 mongorestore --gzip --archive=testdb.gz --db testdb 
+sudo k3s kubectl cp testdb.gz mongo-0:testdb.gz
 
 curl -sfL https://get.k3s.io | sh -   
 sudo chmod -R 777 /etc/rancher/k3s/k3s.yaml

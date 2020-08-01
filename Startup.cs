@@ -48,6 +48,8 @@ namespace forex_app_service
                     = Configuration.GetSection("Account:Token").Value;
                 options.URL 
                     = Configuration.GetSection("URL").Value;
+                options.AllowUpdates
+                    = Configuration.GetSection("AccessControl").GetValue<bool>("AllowUpdates");
             });
 
             

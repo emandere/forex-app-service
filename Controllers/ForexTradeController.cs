@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc;
 using forex_app_service.Mapper;
 using forex_app_service.Models;
@@ -9,10 +10,12 @@ namespace forex_app_service.Controllers
     public class ForexTradeController : ControllerBase
     {
         private readonly ForexTradeMap _forexTradeMap;
+        private readonly IOptions<Settings> _settings;
 
-        public ForexTradeController(ForexTradeMap forexTradeMap)
+        public ForexTradeController(ForexTradeMap forexTradeMap, IOptions<Settings> settings)
         {   
             _forexTradeMap = forexTradeMap;
+            _settings = settings;
         }
 
         [HttpGet]
@@ -26,8 +29,15 @@ namespace forex_app_service.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] ForexTradeDTO trade)
         {
-            await _forexTradeMap.ExecuteTrade(trade);
-            return Ok();
+            if(_settings.Value.AllowUpdates)
+            {
+                await _forexTradeMap.ExecuteTrade(trade);
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }
