@@ -14,11 +14,17 @@ variables:
   tag: '$(Build.BuildId)'
   releaseTag: '$(Build.BuildNumber)'
   serviceName: 'forex-app-service'
+  serviceNameFrontEnd: 'forex-app-service-frontend'
   x86ImageName: 'emandere/$(serviceName)-x86'
   armImageName: 'emandere/$(serviceName)-arm'
+
   DeploymentPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)'
   GitHubDeploymentPath: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/deployment.yaml'
   DeploymentConfigPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)/deployment.yaml'
+
+  DeploymentPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)'
+  GitHubDeploymentPathFrontEnd: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/deployment.frontend.yaml'
+  DeploymentConfigPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)/deployment.yaml'
 
 stages:
 - stage: Build
@@ -128,5 +134,49 @@ stages:
               inputs:
                 sshEndpoint: 'aws-arm'
                 commands: 'k3s kubectl rollout status deployment.v1.apps/$(serviceName)'
+
+  - deployment: WSL_Linux_FrontEnd
+    pool:
+      name: LocalLinux
+    # creates an environment if it doesn’t exist
+    environment: '$(serviceName)'
+    strategy:
+      # default deployment strategy
+      runOnce:
+        deploy:
+          steps:
+            - bash: |
+                # Write your commands here
+
+                echo $(releaseTag)
+
+                sudo mkdir -p $(DeploymentPathFrontEnd)
+                
+                sudo rm -f $(DeploymentPathFrontEnd)/*
+                
+                sudo chmod 775 $(DeploymentPathFrontEnd)
+                
+                sudo wget -q $(GitHubDeploymentPathFrontEnd) -P  $(DeploymentPathFrontEnd)
+                
+                sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPathFrontEnd)
+                
+                sudo sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPathFrontEnd)
+                
+                
+              displayName: 'Set up artifacts'
+
+            - bash: |
+                # Write your commands here
+            
+                sudo k3s kubectl apply -f  $(DeploymentConfigPathFrontEnd)
+              
+              displayName: 'Deploy Release'
+            - bash: |
+                # Write your commands here
+          
+                sudo k3s kubectl rollout status deployment.v1.apps/$(serviceNameFrontEnd)
+            
+              displayName: 'Verify Release'
+            
                         
             
