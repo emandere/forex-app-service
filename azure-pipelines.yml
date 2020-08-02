@@ -24,7 +24,7 @@ variables:
 
   DeploymentPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)'
   GitHubDeploymentPathFrontEnd: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/deployment.frontend.yaml'
-  DeploymentConfigPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)/deployment.yaml'
+  DeploymentConfigPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)/deployment.frontend.yaml'
 
 stages:
 - stage: Build
