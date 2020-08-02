@@ -16,6 +16,7 @@ using forex_app_service.Models;
 using forex_app_service.Domain;
 using forex_app_service.Config;
 using forex_app_service.Mapper;
+using forex_app_service.Middleware;
 
 namespace forex_app_service
 {
@@ -108,6 +109,8 @@ namespace forex_app_service
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseAllowUpdates();
 
             //app.UseHttpsRedirection();
             app.UseCors(MyAllowSpecificOrigins);

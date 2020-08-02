@@ -29,15 +29,8 @@ namespace forex_app_service.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] ForexTradeDTO trade)
         {
-            if(_settings.Value.AllowUpdates)
-            {
-                await _forexTradeMap.ExecuteTrade(trade);
-                return Ok();
-            }
-            else
-            {
-                return NotFound();
-            }
+            await _forexTradeMap.ExecuteTrade(trade);
+            return Ok();
         }
     }
 }

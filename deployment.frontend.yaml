@@ -1,0 +1,30 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: forex-app-service-frontend
+spec:
+  selector:
+    matchLabels:
+      app: forex-app-service-frontend
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: forex-app-service-frontend
+    spec:
+      containers:
+      - name: forex-app-service
+        image: emandere/forex-app-service-{platform}:{buildId}
+        env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: "frontend"
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name: secrets
+            mountPath: "/app/secrets"
+            readOnly: true
+      volumes:
+        - name: secrets
+          secret:
+            secretName: fxpracticeaccount
