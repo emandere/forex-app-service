@@ -159,6 +159,8 @@ stages:
                 sudo wget -q $(GitHubDeploymentPathFrontEnd) -P  $(DeploymentPathFrontEnd)
                 
                 sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPathFrontEnd)
+
+                sudo sed -i 's/fxaccount/fxpracticeaccount/'  $(DeploymentConfigPathFrontEnd)
                 
                 sudo sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPathFrontEnd)
                 
