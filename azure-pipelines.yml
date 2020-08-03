@@ -177,41 +177,40 @@ stages:
                 sudo k3s kubectl rollout status deployment.v1.apps/$(serviceNameFrontEnd)
             
               displayName: 'Verify Release'
-            
-                        
-    - deployment: AWS_ARM_Frontend
-      pool:
-        vmImage: 'ubuntu-latest'
-      environment: '$(serviceName)'
-      strategy:
-        # default deployment strategy
-        runOnce:
-          deploy:
-            steps:
-              - task: SSH@0
-                displayName: 'Set up release artifacts'
-                inputs:
-                  sshEndpoint: 'aws-arm'
-                  commands: |
-                    mkdir -p $(DeploymentPathFrontEnd)
-                    
-                    rm -f $(DeploymentPathFrontEnd)/*
-                    
-                    chmod 775 $(DeploymentPathFrontEnd)
-                    
-                    wget -q $(GitHubDeploymentPathFrontEnd) -P  $(DeploymentPathFrontEnd)
-                    
-                    sed -i 's/{platform}/arm/'  $(DeploymentConfigPathFrontEnd)
-                    
-                    sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPathFrontEnd)
-              - task: SSH@0
-                displayName: 'Deploy new release'
-                inputs:
-                  sshEndpoint: 'aws-arm'
-                  commands: 'k3s kubectl apply -f  $(DeploymentConfigPathFrontEnd)'
-              - task: SSH@0
-                displayName: 'Verify Release'
-                inputs:
-                  sshEndpoint: 'aws-arm'
-                  commands: 'k3s kubectl rollout status deployment.v1.apps/$(serviceNameFrontEnd)'
+                                
+  - deployment: AWS_ARM_Frontend
+    pool:
+      vmImage: 'ubuntu-latest'
+    environment: '$(serviceName)'
+    strategy:
+      # default deployment strategy
+      runOnce:
+        deploy:
+          steps:
+            - task: SSH@0
+              displayName: 'Set up release artifacts'
+              inputs:
+                sshEndpoint: 'aws-arm'
+                commands: |
+                  mkdir -p $(DeploymentPathFrontEnd)
+                  
+                  rm -f $(DeploymentPathFrontEnd)/*
+                  
+                  chmod 775 $(DeploymentPathFrontEnd)
+                  
+                  wget -q $(GitHubDeploymentPathFrontEnd) -P  $(DeploymentPathFrontEnd)
+                  
+                  sed -i 's/{platform}/arm/'  $(DeploymentConfigPathFrontEnd)
+                  
+                  sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPathFrontEnd)
+            - task: SSH@0
+              displayName: 'Deploy new release'
+              inputs:
+                sshEndpoint: 'aws-arm'
+                commands: 'k3s kubectl apply -f  $(DeploymentConfigPathFrontEnd)'
+            - task: SSH@0
+              displayName: 'Verify Release'
+              inputs:
+                sshEndpoint: 'aws-arm'
+                commands: 'k3s kubectl rollout status deployment.v1.apps/$(serviceNameFrontEnd)'
                       
