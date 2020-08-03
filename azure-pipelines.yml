@@ -80,6 +80,8 @@ stages:
                 sudo wget -q $(GitHubDeploymentPath) -P  $(DeploymentPath)
                 
                 sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPath)
+
+                sudo sed -i 's/fxaccount/fxpracticeaccount/'  $(DeploymentConfigPath)
                 
                 sudo sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
                 
