@@ -20,11 +20,3 @@ spec:
             value: "frontend"
         ports:
         - containerPort: 80
-        volumeMounts:
-          - name: secrets
-            mountPath: "/app/secrets"
-            readOnly: true
-      volumes:
-        - name: secrets
-          secret:
-            secretName: fxpracticeaccount
