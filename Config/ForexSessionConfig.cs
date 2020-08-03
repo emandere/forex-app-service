@@ -1,4 +1,6 @@
 using System;
+using System.Globalization;
+
 using AutoMapper;
 using forex_app_service.Domain;
 using forex_app_service.Models;
@@ -80,10 +82,25 @@ namespace forex_app_service.Config
             ;
             CreateMap<BalanceHistoryInDTO,BalanceHistoryDTO>();
             CreateMap<BalanceHistoryDTO,BalanceHistory>();
-
-            CreateMap<Trade,TradeDTO>();
+            DateTime test;
+            CreateMap<Trade,TradeDTO>()
+                .ForMember
+                (
+                   dest=>dest.OpenDate, opts=>opts.MapFrom
+                        (
+                            src => DateTime.TryParse(src.OpenDate,out test)? DateTime.Parse(src.OpenDate).ToString("yyyy-MM-dd") : DateTime.ParseExact(src.OpenDate,"yyyyMMdd",CultureInfo.InvariantCulture).ToString("yyyy-MM-dd")
+                        )
+                )
+                .ForMember
+                (
+                   dest=>dest.CloseDate, opts=>opts.MapFrom
+                        (
+                            src => DateTime.Parse(src.CloseDate).ToString("yyyy-MM-dd")
+                        )
+                );
             CreateMap<Trade,TradeMongo>();
-            CreateMap<TradeMongo,Trade>().ForMember(x => x.PL, opt => opt.Ignore());
+            CreateMap<TradeMongo,Trade>()
+                .ForMember(x => x.PL, opt => opt.Ignore());
             CreateMap<TradeInDTO,TradeDTO>();
             CreateMap<TradeDTO,Trade>();
 
