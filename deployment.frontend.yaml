@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: basic-ingress
+  name: forex-app-service-frontend
   annotations:
     traefik.frontend.rule.type: PathPrefixStrip
 spec:
