@@ -34,3 +34,27 @@ db.rawprices.updateMany({},{$set: {_id:ObjectId()}})
 
 
 db.rawprices.find({_id:{$regex: /Z$/}}).forEach(function(doc){var newDoc = doc; delete newDoc._id; db.rawprices.insert(newDoc); })
+
+
+db.currencypairs.find().forEach(
+    function(pair)
+    {
+        if(db.rawpricesclean.count({instrument: pair.name}) == 0)
+        {
+            print("hello");
+            db.rawprices.find({instrument: pair.name}).forEach(function(doc){var newDoc = doc; delete newDoc._id; db.rawpricesclean.insert(newDoc); });
+        }
+        else
+        {
+            db.rawpricesclean.find({instrument: pair.name}).sort({time:-1}).limit(1).forEach
+            (
+                function(price)
+                {
+                    print(price.time);
+                    db.rawprices.find({instrument: pair.name,time: {$gte: price.time} }).forEach(function(doc){var newDoc = doc; delete newDoc._id; db.rawpricesclean.insert(newDoc); })
+                }
+            ) 
+        }      
+    }
+)
+
