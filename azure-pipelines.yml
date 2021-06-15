@@ -141,7 +141,7 @@ stages:
 
   - deployment: WSL_Linux_FrontEnd
     pool:
-      name: LocalLinux
+      name: LocalLinux2
     # creates an environment if it doesn’t exist
     environment: '$(serviceName)'
     strategy:
