@@ -69,6 +69,8 @@ stages:
             - bash: |
                 # Write your commands here
 
+                echo $(ACCID)
+
                 echo $(releaseTag)
 
                 sudo mkdir -p $(DeploymentPath)
