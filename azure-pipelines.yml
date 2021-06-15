@@ -58,7 +58,7 @@ stages:
     # track deployments on the environment
   - deployment: WSL_Linux
     pool:
-      name: LocalLinux
+      name: LocalLinux2
     # creates an environment if it doesn’t exist
     environment: '$(serviceName)'
     strategy:
@@ -68,6 +68,8 @@ stages:
           steps:
             - bash: |
                 # Write your commands here
+
+                echo $(ACCID)
 
                 echo $(releaseTag)
 
@@ -139,7 +141,7 @@ stages:
 
   - deployment: WSL_Linux_FrontEnd
     pool:
-      name: LocalLinux
+      name: LocalLinux2
     # creates an environment if it doesn’t exist
     environment: '$(serviceName)'
     strategy:
