@@ -86,7 +86,11 @@ stages:
 
                 sudo wget -q $(GitHubSecretsPath)  -P $(DeploymentPath)
 
+                sudo sed -i 's/{URL}/$(URL)/'  $(DeploymentSecretsPath)
+
                 sudo sed -i 's/{ACCID}/$(ACCID)/'  $(DeploymentSecretsPath)
+
+                sudo sed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPath)
                 
                 sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPath)
 
