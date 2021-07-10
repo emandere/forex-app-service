@@ -20,7 +20,9 @@ variables:
 
   DeploymentPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)'
   GitHubDeploymentPath: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/deployment.yaml'
+  GitHubSecretsPath: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/appsettings.secrets.json'
   DeploymentConfigPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)/deployment.yaml'
+  DeploymentSecretsPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)/appsettings.secrets.json'
 
   DeploymentPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)'
   GitHubDeploymentPathFrontEnd: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/deployment.frontend.yaml'
@@ -80,6 +82,10 @@ stages:
                 sudo chmod 775 $(DeploymentPath)
                 
                 sudo wget -q $(GitHubDeploymentPath) -P  $(DeploymentPath)
+
+                sudo wget -q $(GitHubSecretsPath)  -P $(DeploymentPath)
+
+                sudo sed -i 's/{ACCID}/$(ACCID)/'  $(DeploymentSecretsPath)
                 
                 sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPath)
 
