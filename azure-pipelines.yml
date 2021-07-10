@@ -171,9 +171,13 @@ stages:
                 
                 sudo wget -q $(GitHubDeploymentPathFrontEnd) -P  $(DeploymentPathFrontEnd)
 
-                 sudo wget -q $(GitHubSecretsPath)  -P $(DeploymentPathFrontEnd)
+                sudo wget -q $(GitHubSecretsPath)  -P $(DeploymentPathFrontEnd)
+
+                sudo sed -i 's/{URL}/$(URL)/'  $(DeploymentSecretsPathFrontEnd)
 
                 sudo sed -i 's/{ACCID}/$(ACCID)/'  $(DeploymentSecretsPathFrontEnd)
+
+                sudo sed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPathFrontEnd)
                 
                 sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPathFrontEnd)
 
