@@ -27,6 +27,7 @@ variables:
   DeploymentPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)'
   GitHubDeploymentPathFrontEnd: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/deployment.frontend.yaml'
   DeploymentConfigPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)/deployment.frontend.yaml'
+  DeploymentSecretsPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)/appsettings.secrets.json'
 
 stages:
 - stage: Build
@@ -169,6 +170,10 @@ stages:
                 sudo chmod 775 $(DeploymentPathFrontEnd)
                 
                 sudo wget -q $(GitHubDeploymentPathFrontEnd) -P  $(DeploymentPathFrontEnd)
+
+                 sudo wget -q $(GitHubSecretsPath)  -P $(DeploymentPathFrontEnd)
+
+                sudo sed -i 's/{ACCID}/$(ACCID)/'  $(DeploymentSecretsPathFrontEnd)
                 
                 sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPathFrontEnd)
 
