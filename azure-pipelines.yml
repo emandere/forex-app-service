@@ -101,6 +101,7 @@ stages:
 
             - bash: |
                 # Write your commands here
+                sudo k3s kubectl delete secret fxaccount --ignore-not-found
                 sudo k3s kubectl create secret generic fxaccount --from-file $(DeploymentSecretsPath)
 
                 sudo k3s kubectl apply -f  $(DeploymentConfigPath)
@@ -193,6 +194,8 @@ stages:
 
             - bash: |
                 # Write your commands here
+
+                sudo k3s kubectl delete secret fxaccount --ignore-not-found
 
                 sudo k3s kubectl create secret generic fxaccount --from-file $(DeploymentSecretsPathFrontEnd)
             
