@@ -93,8 +93,6 @@ stages:
                 sudo sed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPath)
                 
                 sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPath)
-
-                sudo sed -i 's/fxaccount/fxpracticeaccount/'  $(DeploymentConfigPath)
                 
                 sudo sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
                 
@@ -103,7 +101,8 @@ stages:
 
             - bash: |
                 # Write your commands here
-            
+                sudo k3s kubectl create secret generic fxaccount --from-file $(DeploymentSecretsPath)
+
                 sudo k3s kubectl apply -f  $(DeploymentConfigPath)
               
               displayName: 'Deploy Release'
@@ -194,6 +193,8 @@ stages:
 
             - bash: |
                 # Write your commands here
+
+                sudo k3s kubectl create secret generic fxaccount --from-file $(DeploymentSecretsPathFrontEnd)
             
                 sudo k3s kubectl apply -f  $(DeploymentConfigPathFrontEnd)
               
