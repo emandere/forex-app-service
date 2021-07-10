@@ -184,8 +184,6 @@ stages:
                 sudo sed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPathFrontEnd)
                 
                 sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPathFrontEnd)
-
-                sudo sed -i 's/fxaccount/fxpracticeaccount/'  $(DeploymentConfigPathFrontEnd)
                 
                 sudo sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPathFrontEnd)
                 
