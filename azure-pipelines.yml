@@ -23,8 +23,8 @@ variables:
   GitHubSecretsPath: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/appsettings.secrets.json'
   DeploymentConfigPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)/deployment.yaml'
   DeploymentSecretsPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)/appsettings.secrets.json'
-  DeploymentStatefulSet: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/MongoConfig/localStatefulSet.yaml'
-  DeploymentStorageClass: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/MongoConfig/localStorageClass.yaml'
+  DeploymentStatefulSet: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/MongoConfig/localStatefulSet.yml'
+  DeploymentStorageClass: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/MongoConfig/localStorageClass.yml'
 
 
   DeploymentPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)'
