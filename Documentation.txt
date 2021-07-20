@@ -58,3 +58,5 @@ db.currencypairs.find().forEach(
     }
 )
 
+k3s kubectl get pods --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}'
+

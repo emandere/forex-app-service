@@ -23,6 +23,9 @@ variables:
   GitHubSecretsPath: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/appsettings.secrets.json'
   DeploymentConfigPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)/deployment.yaml'
   DeploymentSecretsPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)/appsettings.secrets.json'
+  DeploymentStatefulSet: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/MongoConfig/localStatefulSet.yaml'
+  DeploymentStorageClass: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/MongoConfig/localStorageClass.yaml'
+
 
   DeploymentPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)'
   GitHubDeploymentPathFrontEnd: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/deployment.frontend.yaml'
@@ -104,6 +107,10 @@ stages:
                 sudo k3s kubectl delete secret fxaccount --ignore-not-found
                 sudo k3s kubectl create secret generic fxaccount --from-file $(DeploymentSecretsPath)
 
+                sudo k3s kubectl apply -f $(DeploymentStorageClass)
+
+                sudo k3s kubectl apply -f $(DeploymentStorageStatefulSet)
+
                 sudo k3s kubectl apply -f  $(DeploymentConfigPath)
               
               displayName: 'Deploy Release'
@@ -163,8 +170,6 @@ stages:
             - bash: |
                 # Write your commands here
 
-                echo $(ACCID)
-
                 echo $(releaseTag)
 
                 sudo mkdir -p $(DeploymentPathFrontEnd)
@@ -196,8 +201,14 @@ stages:
                 sudo k3s kubectl delete secret fxaccount --ignore-not-found
 
                 sudo k3s kubectl create secret generic fxaccount --from-file $(DeploymentSecretsPathFrontEnd)
+
+                sudo k3s kubectl apply -f $(DeploymentStorageClass)
+
+                sudo k3s kubectl apply -f $(DeploymentStorageStatefulSet)
             
                 sudo k3s kubectl apply -f  $(DeploymentConfigPathFrontEnd)
+
+                
               
               displayName: 'Deploy Release'
             - bash: |
