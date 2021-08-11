@@ -41,6 +41,8 @@ spec:
           volumeMounts:
             - name: mongo-persistent-storage
               mountPath: /data/db
+      nodeSelector:
+        platform: x86
   volumeClaimTemplates:
   - metadata:
       name: mongo-persistent-storage
