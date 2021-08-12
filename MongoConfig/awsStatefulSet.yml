@@ -54,3 +54,11 @@ spec:
         requests:
           storage: 1Gi
       storageClassName: "local-storage"
+      nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: platform
+            operator: In
+            values:
+            - x86
