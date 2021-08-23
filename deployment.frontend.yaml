@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: forex-app-service-frontend
   annotations:
-    traefik.frontend.rule.type: PathPrefixStrip
+    traefik.ingress.kubernetes.io/rule-type: PathPrefixStrip
 spec:
     rules:
         - http:
