@@ -141,9 +141,9 @@ stages:
                   chmod 775 $(DeploymentPath)
                   wget -q $(GitHubDeploymentPath) -P  $(DeploymentPath)
                   wget -q $(GitHubSecretsPath)  -P $(DeploymentPath)
-                  sed -i 's/{URL}/"$(URL_PROD)"/'  $(DeploymentSecretsPath)
-                  sed -i 's/{ACCID}/"$(ACCID_PROD)"/'  $(DeploymentSecretsPath)
-                  sed -i 's/{TOKEN}/"$(TOKEN_PROD)"/'  $(DeploymentSecretsPath)
+                  sed -i "s/{URL}/"$(URL_PROD)"/"  $(DeploymentSecretsPath)
+                  sed -i "s/{ACCID}/"$(ACCID_PROD)"/"  $(DeploymentSecretsPath)
+                  sed -i "s/{TOKEN}/"$(TOKEN_PROD)"/"  $(DeploymentSecretsPath)
                   sed -i 's/{platform}/arm/'  $(DeploymentConfigPath)
                   sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
             - task: SSH@0
