@@ -132,10 +132,7 @@ stages:
           steps:
             - task: SSH@0
               displayName: 'Set up release artifacts'
-              env: 
-                MAPPED_URL_PROD: $(URL_PROD)
-                MAPPED_ACCID_PROD: $(ACCID_PROD)
-                MAPPED_TOKEN_PROD: $(TOKEN_PROD)
+              
               inputs:
                 sshEndpoint: 'aws-arm'
                 commands: |
@@ -149,6 +146,10 @@ stages:
                   sed -i 's/{TOKEN}/$(MAPPED_TOKEN_PROD)/'  $(DeploymentSecretsPath)
                   sed -i 's/{platform}/arm/'  $(DeploymentConfigPath)
                   sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
+                env: 
+                  MAPPED_URL_PROD: $(URL_PROD)
+                  MAPPED_ACCID_PROD: $(ACCID_PROD)
+                  MAPPED_TOKEN_PROD: $(TOKEN_PROD)
             - task: SSH@0
               displayName: 'Deploy new release'
               inputs:
