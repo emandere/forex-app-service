@@ -139,10 +139,9 @@ stages:
                   mkdir -p $(DeploymentPath)                 
                   rm -f $(DeploymentPath)/*
                   chmod 775 $(DeploymentPath)
-                  echo ""$(URL_PROD)"" > $(DeploymentPath)/test.txt
                   wget -q $(GitHubDeploymentPath) -P  $(DeploymentPath)
                   wget -q $(GitHubSecretsPath)  -P $(DeploymentPath)
-                  sed -i "s/{URL}/"$(URL_PROD)"/"  $(DeploymentSecretsPath)
+                  sed -i "s@{URL}@"$(URL_PROD)"@"  $(DeploymentSecretsPath)
                   sed -i "s/{ACCID}/"$(ACCID_PROD)"/"  $(DeploymentSecretsPath)
                   sed -i "s/{TOKEN}/"$(TOKEN_PROD)"/"  $(DeploymentSecretsPath)
                   sed -i 's/{platform}/arm/'  $(DeploymentConfigPath)
