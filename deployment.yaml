@@ -35,6 +35,8 @@ spec:
           - name: secrets
             mountPath: "/app/secrets"
             readOnly: true
+      nodeSelector:
+        platform: {platform}
       volumes:
         - name: secrets
           secret:
