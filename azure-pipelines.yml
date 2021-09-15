@@ -89,7 +89,7 @@ stages:
 
                 sudo wget -q $(GitHubSecretsPath)  -P $(DeploymentPath)
 
-                sudo sed -i 's/{URL}/$(URL)/'  $(DeploymentSecretsPath)
+                sudo sed -i 's@{URL}@$(URL)@'  $(DeploymentSecretsPath)
 
                 sudo sed -i 's/{ACCID}/$(ACCID)/'  $(DeploymentSecretsPath)
 
