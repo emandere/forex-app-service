@@ -93,6 +93,8 @@ namespace forex_app_service
             services.AddTransient<ForexSessionMap,ForexSessionMap>();
             services.AddTransient<ForexRuleMap,ForexRuleMap>();
             services.AddTransient<ForexTradeMap,ForexTradeMap>();
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
             //services.AddSingleton(mapper);
             services.AddAutoMapper(c=>c.AddProfiles(profiles),typeof(Startup));
         }
@@ -103,6 +105,12 @@ namespace forex_app_service
             if (env.EnvironmentName=="Development")
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                    options.RoutePrefix = string.Empty;
+                });
             }
             else
             {
