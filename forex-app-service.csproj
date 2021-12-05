@@ -5,8 +5,8 @@
     <RootNamespace>forex_app_service</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="mongocsharpdriver" Version="2.10.2" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="mongocsharpdriver" Version="2.10.2"/>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3"/>
   </ItemGroup>
 </Project>
