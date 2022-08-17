@@ -95,7 +95,7 @@ stages:
 
                 gsed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPath)
                 
-                gsed -i 's/{platform}/x86/'  $(DeploymentConfigPath)
+                gsed -i 's/{platform}/arm/'  $(DeploymentConfigPath)
                 
                 gsed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
                 
@@ -199,7 +199,7 @@ stages:
 
                 gsed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPathFrontEnd)
                 
-                gsed -i 's/{platform}/x86/'  $(DeploymentConfigPathFrontEnd)
+                gsed -i 's/{platform}/arm/'  $(DeploymentConfigPathFrontEnd)
                 
                 gsed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPathFrontEnd)
                 

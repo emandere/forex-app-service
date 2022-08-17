@@ -60,4 +60,5 @@ db.currencypairs.find().forEach(
 
 k3s kubectl get pods --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}'
 
-kubectl taint nodes docker-desktop platform=arm:NoSchedule
+kubectl label nodes docker-desktop platform=arm
+kubectl get nodes --show-labels
