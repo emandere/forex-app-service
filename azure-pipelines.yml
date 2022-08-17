@@ -79,25 +79,25 @@ stages:
 
                 echo $(releaseTag)
 
-                sudo mkdir -p $(DeploymentPath)
+                mkdir -p $(DeploymentPath)
                 
-                sudo rm -f $(DeploymentPath)/*
+                rm -f $(DeploymentPath)/*
                 
-                sudo chmod 775 $(DeploymentPath)
+                chmod 775 $(DeploymentPath)
                 
-                sudo wget -q $(GitHubDeploymentPath) -P  $(DeploymentPath)
+                wget -q $(GitHubDeploymentPath) -P  $(DeploymentPath)
 
-                sudo wget -q $(GitHubSecretsPath)  -P $(DeploymentPath)
+                wget -q $(GitHubSecretsPath)  -P $(DeploymentPath)
 
-                sudo sed -i 's@{URL}@$(URL)@'  $(DeploymentSecretsPath)
+                sed -i 's@{URL}@$(URL)@'  $(DeploymentSecretsPath)
 
-                sudo sed -i 's/{ACCID}/$(ACCID)/'  $(DeploymentSecretsPath)
+                sed -i 's/{ACCID}/$(ACCID)/'  $(DeploymentSecretsPath)
 
-                sudo sed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPath)
+                sed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPath)
                 
-                sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPath)
+                sed -i 's/{platform}/x86/'  $(DeploymentConfigPath)
                 
-                sudo sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
+                sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
                 
                 
               displayName: 'Set up artifacts'
@@ -160,9 +160,9 @@ stages:
                 sshEndpoint: 'aws-arm'
                 commands: 'k3s kubectl rollout status deployment.v1.apps/$(serviceName)'
 
-  - deployment: WSL_Linux_FrontEnd
+  - deployment: Linux_FrontEnd
     pool:
-      name: LocalLinux2
+      name: MacPool
     # creates an environment if it doesn’t exist
     environment: '$(serviceName)'
     strategy:
@@ -175,25 +175,25 @@ stages:
 
                 echo $(releaseTag)
 
-                sudo mkdir -p $(DeploymentPathFrontEnd)
+                mkdir -p $(DeploymentPathFrontEnd)
                 
-                sudo rm -f $(DeploymentPathFrontEnd)/*
+                rm -f $(DeploymentPathFrontEnd)/*
                 
-                sudo chmod 775 $(DeploymentPathFrontEnd)
+                chmod 775 $(DeploymentPathFrontEnd)
                 
-                sudo wget -q $(GitHubDeploymentPathFrontEnd) -P  $(DeploymentPathFrontEnd)
+                wget -q $(GitHubDeploymentPathFrontEnd) -P  $(DeploymentPathFrontEnd)
 
-                sudo wget -q $(GitHubSecretsPath)  -P $(DeploymentPathFrontEnd)
+                wget -q $(GitHubSecretsPath)  -P $(DeploymentPathFrontEnd)
 
-                sudo sed -i 's/{URL}/$(URL)/'  $(DeploymentSecretsPathFrontEnd)
+                sed -i 's/{URL}/$(URL)/'  $(DeploymentSecretsPathFrontEnd)
 
-                sudo sed -i 's/{ACCID}/$(ACCID)/'  $(DeploymentSecretsPathFrontEnd)
+                sed -i 's/{ACCID}/$(ACCID)/'  $(DeploymentSecretsPathFrontEnd)
 
-                sudo sed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPathFrontEnd)
+                sed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPathFrontEnd)
                 
-                sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPathFrontEnd)
+                sed -i 's/{platform}/x86/'  $(DeploymentConfigPathFrontEnd)
                 
-                sudo sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPathFrontEnd)
+                sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPathFrontEnd)
                 
                 
               displayName: 'Set up artifacts'
