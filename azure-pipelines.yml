@@ -18,19 +18,15 @@ variables:
   x86ImageName: 'emandere/$(serviceName)-x86'
   armImageName: 'emandere/$(serviceName)-arm'
 
-  DeploymentPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)'
   GitHubDeploymentPath: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/deployment.yaml'
   GitHubSecretsPath: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/appsettings.secrets.json'
-  DeploymentConfigPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)/deployment.yaml'
-  DeploymentSecretsPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)/appsettings.secrets.json'
+  
   DeploymentStatefulSet: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/MongoConfig/localStatefulSet.yml'
   DeploymentStorageClass: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/MongoConfig/localStorageClass.yml'
 
-
-  DeploymentPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)'
+  
   GitHubDeploymentPathFrontEnd: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/deployment.frontend.yaml'
-  DeploymentConfigPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)/deployment.frontend.yaml'
-  DeploymentSecretsPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)/appsettings.secrets.json'
+ 
 
 stages:
 - stage: Build
@@ -66,6 +62,10 @@ stages:
     pool:
       name: MacPool
     # creates an environment if it doesn’t exist
+    variables:
+      DeploymentPath: '/Users/emandere/deployments/$(serviceName)/$(releaseTag)'
+      DeploymentConfigPath: '/Users/emandere/deployments/$(serviceName)/$(releaseTag)/deployment.yaml'
+      DeploymentSecretsPath: '/Users/emandere/deployments/$(serviceName)/$(releaseTag)/appsettings.secrets.json'
     environment: '$(serviceName)'
     strategy:
       # default deployment strategy
@@ -125,6 +125,10 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     environment: '$(serviceName)'
+    variables:
+      DeploymentPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)'
+      DeploymentConfigPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)/deployment.yaml'
+      DeploymentSecretsPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)/appsettings.secrets.json'
     strategy:
       # default deployment strategy
       runOnce:
@@ -160,11 +164,15 @@ stages:
                 sshEndpoint: 'aws-arm'
                 commands: 'k3s kubectl rollout status deployment.v1.apps/$(serviceName)'
 
-  - deployment: Linux_FrontEnd
+  - deployment: Mac_FrontEnd
     pool:
       name: MacPool
     # creates an environment if it doesn’t exist
     environment: '$(serviceName)'
+    variables:
+      DeploymentPathFrontEnd: '/Users/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)'
+      DeploymentConfigPathFrontEnd: '/Users/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)/deployment.frontend.yaml'
+      DeploymentSecretsPathFrontEnd: '/Users/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)/appsettings.secrets.json'
     strategy:
       # default deployment strategy
       runOnce:
@@ -225,6 +233,10 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     environment: '$(serviceName)'
+    variables:
+      DeploymentPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)'
+      DeploymentConfigPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)/deployment.frontend.yaml'
+      DeploymentSecretsPathFrontEnd: '/home/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)/appsettings.secrets.json'
     strategy:
       # default deployment strategy
       runOnce:
