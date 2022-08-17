@@ -89,15 +89,15 @@ stages:
 
                 wget -q $(GitHubSecretsPath)  -P $(DeploymentPath)
 
-                sed -i 's@{URL}@$(URL)@'  $(DeploymentSecretsPath)
+                gsed -i 's@{URL}@$(URL)@'  $(DeploymentSecretsPath)
 
-                sed -i 's/{ACCID}/$(ACCID)/'  $(DeploymentSecretsPath)
+                gsed -i 's/{ACCID}/$(ACCID)/'  $(DeploymentSecretsPath)
 
-                sed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPath)
+                gsed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPath)
                 
-                sed -i 's/{platform}/x86/'  $(DeploymentConfigPath)
+                gsed -i 's/{platform}/x86/'  $(DeploymentConfigPath)
                 
-                sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
+                gsed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
                 
                 
               displayName: 'Set up artifacts'
@@ -193,15 +193,15 @@ stages:
 
                 wget -q $(GitHubSecretsPath)  -P $(DeploymentPathFrontEnd)
 
-                sed -i 's/{URL}/$(URL)/'  $(DeploymentSecretsPathFrontEnd)
+                gsed -i 's/{URL}/$(URL)/'  $(DeploymentSecretsPathFrontEnd)
 
-                sed -i 's/{ACCID}/$(ACCID)/'  $(DeploymentSecretsPathFrontEnd)
+                gsed -i 's/{ACCID}/$(ACCID)/'  $(DeploymentSecretsPathFrontEnd)
 
-                sed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPathFrontEnd)
+                gsed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPathFrontEnd)
                 
-                sed -i 's/{platform}/x86/'  $(DeploymentConfigPathFrontEnd)
+                gsed -i 's/{platform}/x86/'  $(DeploymentConfigPathFrontEnd)
                 
-                sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPathFrontEnd)
+                gsed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPathFrontEnd)
                 
                 
               displayName: 'Set up artifacts'
