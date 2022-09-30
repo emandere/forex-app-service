@@ -4,17 +4,23 @@ metadata:
   name: forex-app-service-frontend
   annotations:
     traefik.frontend.rule.type: PathPrefixStrip
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
     rules:
-        - http:
-            paths:
-            - path: /service
-              pathType: Prefix
-              backend:
-                service:
-                  name: forex-app-service-frontend
-                  port: 
-                    number: 80
+        - host: forex-service.{url_host}
+          http:
+              paths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  service:
+                    name: forex-app-service-frontend
+                    port: 
+                      number: 80
+    tls:
+       - secretName: forex-tls
+         hosts:
+         - forex-service.{url_host}
 ---
 apiVersion: v1
 kind: Service
