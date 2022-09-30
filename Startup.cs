@@ -76,14 +76,16 @@ namespace forex_app_service
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:4200",
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                    /*builder.WithOrigins("http://localhost:4200",
                     "http://forex.localdev.me:8080/",
                     "http://forex.enappsaws.net/",
                     "https://forex.localdev.me:8443/",
                     "https://forex.enappsaws.net/")
                     .AllowAnyHeader()
-                    .AllowAnyMethod();
-                    
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin();*/
+
                     /*var origins = Configuration.GetSection("CORS:origins").GetChildren();
                     foreach(var origin in origins)
                     {
