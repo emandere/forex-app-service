@@ -131,9 +131,10 @@ namespace forex_app_service
             app.UseAllowUpdates();
 
             //app.UseHttpsRedirection();
-            app.UseCors();
+            
             //app.UseMvc();
             app.UseRouting(); 
+            app.UseCors();
             app.UseEndpoints(endpoints =>
             {
                 // Mapping of endpoints goes here:
