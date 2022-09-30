@@ -79,7 +79,7 @@ namespace forex_app_service
                     var origins = Configuration.GetSection("CORS:origins").GetChildren();
                     foreach(var origin in origins)
                     {
-                        builder.WithOrigins(origin.Value);
+                        builder.WithOrigins(origin.Value).AllowAnyHeader().AllowAnyMethod();
                     }
 
                 });
