@@ -1,14 +1,12 @@
 using AutoMapper;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using forex_app_service.Mapper;
 using forex_app_service.Models;
 
 namespace forex_app_service.Controllers
 {
-    [EnableCors("_myAllowSpecificOrigins")]
     [Route("api/[controller]")]
     [ApiController]
     public class ForexPricesIndicatorController : ControllerBase
