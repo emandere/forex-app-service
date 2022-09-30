@@ -201,7 +201,7 @@ stages:
                 
                 gsed -i 's/{platform}/arm/'  $(DeploymentConfigPathFrontEnd)
 
-                gsed -i 's/{url_host}/${url_host_mac}/'  $(DeploymentConfigPathFrontEnd)
+                gsed -i 's/{url_host}/$(url_host_mac)/'  $(DeploymentConfigPathFrontEnd)
 
                 gsed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPathFrontEnd)
                 
@@ -259,7 +259,7 @@ stages:
                   
                   sed -i 's/{platform}/arm/'  $(DeploymentConfigPathFrontEnd)
 
-                   sed -i "s/{url_host}/"${url_host_prod}"/"  $(DeploymentConfigPathFrontEnd)
+                   sed -i "s/{url_host}/"$(url_host_prod)"/"  $(DeploymentConfigPathFrontEnd)
                   
                   sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPathFrontEnd)
             - task: SSH@0
