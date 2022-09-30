@@ -73,18 +73,18 @@ namespace forex_app_service
             };
             services.AddCors(options =>
             {
-                options.AddPolicy(MyAllowSpecificOrigins,
+                options.AddDefaultPolicy(
                 builder =>
                 {
-                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-                    /*builder.WithOrigins("http://localhost:4200",
+                    //builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                    builder.WithOrigins("http://localhost:4200",
                     "http://forex.localdev.me:8080/",
                     "http://forex.enappsaws.net/",
                     "https://forex.localdev.me:8443/",
                     "https://forex.enappsaws.net/")
                     .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowAnyOrigin();*/
+                    .AllowAnyMethod();
+   
 
                     /*var origins = Configuration.GetSection("CORS:origins").GetChildren();
                     foreach(var origin in origins)
@@ -131,7 +131,7 @@ namespace forex_app_service
             app.UseAllowUpdates();
 
             //app.UseHttpsRedirection();
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors();
             //app.UseMvc();
             app.UseRouting(); 
             app.UseEndpoints(endpoints =>
