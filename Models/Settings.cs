@@ -8,6 +8,8 @@ namespace forex_app_service.Models
         public string ForexAccount;
         public string Token;
         public string URL;
+        public string AWSKey;
+        public string AWSKeyId;
         public bool AllowUpdates;
     }
 }

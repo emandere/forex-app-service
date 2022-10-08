@@ -50,7 +50,11 @@ namespace forex_app_service
                 options.URL 
                     = Configuration.GetSection("URL").Value;
                 options.AllowUpdates
-                    = Configuration.GetSection("AccessControl").GetValue<bool>("AllowUpdates");
+                    = Configuration.GetSection("AccessControl").GetValue<bool>("AllowUpdates"); 
+                options.AWSKeyId 
+                    = Configuration.GetSection("AWS:KeyId").Value; ;
+                options.AWSKey 
+                    = Configuration.GetSection("AWS:Key").Value; ;
             });
 
             
@@ -93,6 +97,7 @@ namespace forex_app_service
             services.AddTransient<ForexSessionMap,ForexSessionMap>();
             services.AddTransient<ForexRuleMap,ForexRuleMap>();
             services.AddTransient<ForexTradeMap,ForexTradeMap>();
+            services.AddTransient<UploadMap,UploadMap>();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             //services.AddSingleton(mapper);
