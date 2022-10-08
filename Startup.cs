@@ -56,10 +56,6 @@ namespace forex_app_service
                 options.AWSKey 
                     = Configuration.GetSection("AWS:Key").Value; ;
             });
-
-            
-            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            //services.AddMvc(option => option.EnableEndpointRouting = true);
            
             services.AddControllers();
              var config = new AutoMapper.MapperConfiguration(cfg =>
