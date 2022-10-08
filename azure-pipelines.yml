@@ -97,7 +97,7 @@ stages:
 
                 gsed -i 's/{AWSKEYID}/$(AWSKEYID)/'  $(DeploymentSecretsPath)
 
-                gsed -i 's/{AWSKEY}/$(AWSKEY)/'  $(DeploymentSecretsPath)
+                gsed -i 's@{AWSKEY}@$(AWSKEY)@'   $(DeploymentSecretsPath)
                 
                 gsed -i 's/{platform}/arm/'  $(DeploymentConfigPath)
                 
@@ -153,7 +153,7 @@ stages:
                   sed -i "s/{ACCID}/"$(ACCID_PROD)"/"  $(DeploymentSecretsPath)
                   sed -i "s/{TOKEN}/"$(TOKEN_PROD)"/"  $(DeploymentSecretsPath)
                   sed -i 's/{AWSKEYID}/$(AWSKEYID)/'  $(DeploymentSecretsPath)
-                  sed -i 's/{AWSKEY}/$(AWSKEY)/'  $(DeploymentSecretsPath)
+                  sed -i "s@{AWSKEY}@"$(AWSKEY)"@"  $(DeploymentSecretsPath)
                   sed -i 's/{platform}/arm/'  $(DeploymentConfigPath)
                   sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
             - task: SSH@0
