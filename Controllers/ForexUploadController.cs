@@ -26,5 +26,12 @@ namespace forex_app_service.Controllers
             await _uploadMap.UploadDailyPrice(prices);
             return Ok("success");
         }
+
+        [HttpGet("latestdate/{pair}")]
+        public async Task<ActionResult> GetQuote(string pair)
+        {
+            var result = await _uploadMap.GetDay(pair);
+            return Ok(result);
+        }
     }
 }
