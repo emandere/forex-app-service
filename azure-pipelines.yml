@@ -196,15 +196,7 @@ stages:
                 chmod 775 $(DeploymentPathFrontEnd)
                 
                 wget -q $(GitHubDeploymentPathFrontEnd) -P  $(DeploymentPathFrontEnd)
-
-                wget -q $(GitHubSecretsPath)  -P $(DeploymentPathFrontEnd)
-
-                gsed -i 's/{URL}/$(URL)/'  $(DeploymentSecretsPathFrontEnd)
-
-                gsed -i 's/{ACCID}/$(ACCID)/'  $(DeploymentSecretsPathFrontEnd)
-
-                gsed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPathFrontEnd)
-                
+               
                 gsed -i 's/{platform}/arm/'  $(DeploymentConfigPathFrontEnd)
 
                 gsed -i 's/{url_host}/$(url_host_mac)/'  $(DeploymentConfigPathFrontEnd)
@@ -215,20 +207,9 @@ stages:
               displayName: 'Set up artifacts'
 
             - bash: |
-                # Write your commands here
-
-                kubectl delete secret fxaccount --ignore-not-found
-
-                kubectl create secret generic fxaccount --from-file $(DeploymentSecretsPathFrontEnd)
-
-                kubectl apply -f $(DeploymentStorageClass)
-
-                kubectl apply -f $(DeploymentStatefulSet)
-            
+                # Write your commands here           
                 kubectl apply -f  $(DeploymentConfigPathFrontEnd)
-
-                
-              
+  
               displayName: 'Deploy Release'
             - bash: |
                 # Write your commands here
