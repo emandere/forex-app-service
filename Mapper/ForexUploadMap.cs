@@ -31,7 +31,7 @@ namespace forex_app_service.Mapper
 
         public async Task UploadDailyPrice(IEnumerable<ForexDailyPriceDTO> days)
         {
-            
+
             foreach(var day in days)
             {
                 var dayString= JsonSerializer.Serialize<ForexDailyPriceDTO>(day);
@@ -46,6 +46,9 @@ namespace forex_app_service.Mapper
  
         public  async Task<DateTime> GetDay(string pair)
         {
+            Console.WriteLine($"ID: {_settings.Value.AWSKeyId}");
+            Console.WriteLine($"VAL: {_settings.Value.AWSKey}");
+
             var days = await GetDays(
                  _settings.Value.AWSKeyId,
                 _settings.Value.AWSKey,"forexdailyprices"
