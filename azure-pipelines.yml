@@ -177,8 +177,8 @@ stages:
     environment: '$(serviceName)'
     variables:
       DeploymentPathFrontEnd: '/Users/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)'
+      DeploymentSecretsPath: '/Users/emandere/deployments/$(serviceName)/$(releaseTag)/appsettings.secrets.json'
       DeploymentConfigPathFrontEnd: '/Users/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)/deployment.frontend.yaml'
-      DeploymentSecretsPathFrontEnd: '/Users/emandere/deployments/$(serviceNameFrontEnd)/$(releaseTag)/appsettings.secrets.json'
     strategy:
       # default deployment strategy
       runOnce:
@@ -196,6 +196,16 @@ stages:
                 chmod 775 $(DeploymentPathFrontEnd)
                 
                 wget -q $(GitHubDeploymentPathFrontEnd) -P  $(DeploymentPathFrontEnd)
+
+                gsed -i 's@{URL}@$(URL)@'  $(DeploymentSecretsPath)
+
+                gsed -i 's/{ACCID}/$(ACCID)/'  $(DeploymentSecretsPath)
+
+                gsed -i 's/{TOKEN}/$(TOKEN)/'  $(DeploymentSecretsPath)
+
+                gsed -i 's/{AWSKEYID}/$(AWSKEYID)/'  $(DeploymentSecretsPath)
+
+                gsed -i 's@{AWSKEY}@$(AWSKEY)@'   $(DeploymentSecretsPath)
                
                 gsed -i 's/{platform}/arm/'  $(DeploymentConfigPathFrontEnd)
 
@@ -207,7 +217,9 @@ stages:
               displayName: 'Set up artifacts'
 
             - bash: |
-                # Write your commands here           
+                # Write your commands here
+                kubectl delete secret fxaccount --ignore-not-found
+                kubectl create secret generic fxaccount --from-file $(DeploymentSecretsPath)           
                 kubectl apply -f  $(DeploymentConfigPathFrontEnd)
   
               displayName: 'Deploy Release'
