@@ -46,9 +46,6 @@ namespace forex_app_service.Mapper
  
         public  async Task<DateTime> GetDay(string pair)
         {
-            Console.WriteLine($"ID: {_settings.Value.AWSKeyId}");
-            Console.WriteLine($"VAL: {_settings.Value.AWSKey}");
-
             var days = await GetDays(
                  _settings.Value.AWSKeyId,
                 _settings.Value.AWSKey,"forexdailyprices"
